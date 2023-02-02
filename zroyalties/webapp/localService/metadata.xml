@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="https://vhagyds4ci.sap.agrogalaxy.com.br:44300/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://vhagyds4ci.sap.agrogalaxy.com.br:44300/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://vhagyds4ci.sap.agrogalaxy.com.br:44300/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://vhagyds4ci.sap.agrogalaxy.com.br:44300/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://vhagyds4ci.sap.agrogalaxy.com.br:44300/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://vhagyds4ci.sap.agrogalaxy.com.br:44300/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://vhagyds4ci.sap.agrogalaxy.com.br:44300/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://vhagyds4ci.sap.agrogalaxy.com.br:44300/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://vhagyds4ci.sap.agrogalaxy.com.br:44300/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZADOP_ROYALTIES_SRV" xml:lang="pt" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="ZADOC_ROYALTIES_LOGType" sap:label="Registro de transações de consula e baixa de credito" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Plant"/>
+                    <PropertyRef Name="Romaneio"/>
+                    <PropertyRef Name="EdcNumber"/>
+                    <PropertyRef Name="CreationDate"/>
+                    <PropertyRef Name="CreationTime"/>
+                </Key>
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Centro"/>
+                <Property Name="Romaneio" Type="Edm.String" Nullable="false" MaxLength="20" sap:display-format="UpperCase" sap:label="Documento"/>
+                <Property Name="EdcNumber" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Numero EDC" sap:quickinfo="Numero do EDC"/>
+                <Property Name="CreationDate" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:label="Data" sap:quickinfo="Data de execução da transação"/>
+                <Property Name="CreationTime" Type="Edm.Time" Nullable="false" Precision="0" sap:label="Horario" sap:quickinfo="Hora de execução da transação"/>
+                <Property Name="Discharge" Type="Edm.String" MaxLength="5" sap:label="Baixa realizada" sap:quickinfo="Baixa de crédito" sap:semantics="currency-code"/>
+                <Property Name="FiscalYear" Type="Edm.String" MaxLength="4" sap:display-format="NonNegative" sap:label="Exercício"/>
+                <Property Name="Balance" Type="Edm.String" MaxLength="5" sap:label="Saldo" sap:semantics="currency-code"/>
+                <Property Name="DischargeStatus" Type="Edm.String" MaxLength="24" sap:display-format="UpperCase" sap:label="Status da baixa"/>
+            </EntityType>
+            <EntityType Name="ZADOC_ROYALTIES_MONITORType" sap:label="Monitor de Royalties" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ContractNum"/>
+                    <PropertyRef Name="ApplicationDocNum"/>
+                    <PropertyRef Name="EdcNum"/>
+                </Key>
+                <Property Name="ContractNum" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="ContrComercial" sap:quickinfo="Contrato comercial"/>
+                <Property Name="ApplicationDocNum" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Nº doc.aplicação" sap:quickinfo="Número do documento de aplicação"/>
+                <Property Name="EdcNum" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="ID EDC" sap:quickinfo="ID do objeto de entrada de dados de carregamento"/>
+                <Property Name="EdcType" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Tipo EDC"/>
+                <Property Name="Property" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Codigo Propriedade"/>
+                <Property Name="Material" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Nº do material"/>
+                <Property Name="MaterialDescription" Type="Edm.String" MaxLength="40" sap:label="Texto breve material" sap:quickinfo="Texto breve de material"/>
+                <Property Name="ApplicationQuantity" Type="Edm.Decimal" Precision="8" Scale="2"/>
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Criado por"/>
+                <Property Name="CreatedOn" Type="Edm.Decimal" Precision="15" Scale="0" sap:label="Criado em"/>
+                <Property Name="ChangedBy" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Modificado por"/>
+                <Property Name="ChangedOn" Type="Edm.Decimal" Precision="15" Scale="0" sap:label="Modificado em"/>
+                <Property Name="Ticket" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Chave GT" sap:quickinfo="OIL-TSW: chave de guia de transporte"/>
+                <Property Name="Romaaneio" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Documento"/>
+                <Property Name="TicketDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Created At"/>
+                <Property Name="Partner" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Partner"/>
+                <Property Name="PartnerId" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="NºID fiscal" sap:quickinfo="Nº ID fiscal para parceiro de negócios"/>
+                <Property Name="PartnerDescription" Type="Edm.String" MaxLength="50" sap:label="Vocativo"/>
+                <Property Name="Safra" Type="Edm.String" MaxLength="30" sap:display-format="UpperCase" sap:label="Safra"/>
+                <Property Name="Plant" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Centro"/>
+                <NavigationProperty Name="to_RoyaltiesLog" Relationship="ZADOP_ROYALTIES_SRV.assoc_C63BECDFAB1D66543C150F8B76FD43E5" FromRole="FromRole_assoc_C63BECDFAB1D66543C150F8B76FD43E5" ToRole="ToRole_assoc_C63BECDFAB1D66543C150F8B76FD43E5"/>
+            </EntityType>
+            <Association Name="assoc_C63BECDFAB1D66543C150F8B76FD43E5" sap:content-version="1">
+                <End Type="ZADOP_ROYALTIES_SRV.ZADOC_ROYALTIES_MONITORType" Multiplicity="1" Role="FromRole_assoc_C63BECDFAB1D66543C150F8B76FD43E5"/>
+                <End Type="ZADOP_ROYALTIES_SRV.ZADOC_ROYALTIES_LOGType" Multiplicity="*" Role="ToRole_assoc_C63BECDFAB1D66543C150F8B76FD43E5"/>
+            </Association>
+            <EntityContainer Name="ZADOP_ROYALTIES_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="ZADOC_ROYALTIES_LOG" EntityType="ZADOP_ROYALTIES_SRV.ZADOC_ROYALTIES_LOGType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ZADOC_ROYALTIES_MONITOR" EntityType="ZADOP_ROYALTIES_SRV.ZADOC_ROYALTIES_MONITORType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <AssociationSet Name="assoc_C63BECDFAB1D66543C150F8B76FD43E5" Association="ZADOP_ROYALTIES_SRV.assoc_C63BECDFAB1D66543C150F8B76FD43E5" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ZADOC_ROYALTIES_MONITOR" Role="FromRole_assoc_C63BECDFAB1D66543C150F8B76FD43E5"/>
+                    <End EntitySet="ZADOC_ROYALTIES_LOG" Role="ToRole_assoc_C63BECDFAB1D66543C150F8B76FD43E5"/>
+                </AssociationSet>
+            </EntityContainer>
+            <Annotations Target="ZADOP_ROYALTIES_SRV.ZADOP_ROYALTIES_SRV_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+                <Annotation Term="Aggregation.ApplySupported">
+                    <Record>
+                        <PropertyValue Property="Transformations">
+                            <Collection>
+                                <String>aggregate</String>
+                                <String>groupby</String>
+                                <String>filter</String>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Rollup" EnumMember="None"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <atom:link rel="self" href="https://vhagyds4ci.sap.agrogalaxy.com.br:44300/sap/opu/odata/sap/ZADOP_ROYALTIES_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://vhagyds4ci.sap.agrogalaxy.com.br:44300/sap/opu/odata/sap/ZADOP_ROYALTIES_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
