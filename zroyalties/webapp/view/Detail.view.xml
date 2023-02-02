@@ -1,14 +1,30 @@
 <mvc:View
 	controllerName="royalties.zroyalties.controller.Detail"
 	xmlns="sap.m"
-	xmlns:semantic="sap.f.semantic"
+	xmlns:semantic="sap.m.semantic"
 	xmlns:mvc="sap.ui.core.mvc"
 >
-	<semantic:SemanticPage
+	<!-- <semantic:SemanticPage
 		id="detailPage"
 		busy="{detailView>/busy}"
-		busyIndicatorDelay="{detailView>/delay}"
-	>
+		busyIndicatorDelay="{detailView>/delay}" 
+	> -->
+
+    <semantic:FullscreenPage
+		id="page0"
+		floatingFooter="true"
+		class="noScroll"
+		busy="{ProdProcView>/busy}"
+		enableScrolling="false"
+        title="{i18n>detailTitle}"
+ 
+	> 
+        <Title
+            id="listPageTitle"
+            text="{listView>/title}"
+            level="H2"
+        /> 
+
 		<semantic:content>
 			<smartTable:SmartTable
 				xmlns:smartTable="sap.ui.comp.smarttable"
@@ -20,11 +36,12 @@
 				persistencyKey="SmartTableAnalytical_Explored"
 				class="sapUiResponsiveContentPadding"
 				app:useSmartToggle="true"
-				initiallyVisibleFields="Plant,Romaneio,EdcNumber,CreationDate,CreationTime,Discharge,FiscalYear,Balance,DischargeStatus"
+				initiallyVisibleFields="CreationDate,CreationTime,Discharge,FiscalYear,Balance,DischargeStatus"
 				enableAutoBinding="true"
 				showFullScreenButton="false"
 				tableBindingPath="to_RoyaltiesLog"
 				requestAtLeastFields="EdcNumber"
+                
 			>
 				<Table
 					id="list3"
@@ -40,5 +57,22 @@
 				/>
 			</smartTable:SmartTable>
 		</semantic:content>
-	</semantic:SemanticPage>
+        
+        <semantic:messagesIndicator>
+			<semantic:MessagesIndicator
+				id="MessageIndicator"
+				press="onMessagesButtonPress"
+			/>
+		</semantic:messagesIndicator>
+        
+
+		<semantic:customFooterContent>
+            <Button
+				id="ButtonSolicitation"
+				text="{i18n>discharge}"
+				press="SampleSolicitation" 
+			/>
+        </semantic:customFooterContent>
+
+	</semantic:FullscreenPage>
 </mvc:View>

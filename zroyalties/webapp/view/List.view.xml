@@ -7,8 +7,10 @@
 	<semantic:SemanticPage
 		id="listPage"
 		preserveHeaderStateOnScroll="true"
-		toggleHeaderOnTitleClick="false"
+		toggleHeaderOnTitleClick="false" 
+        class="sapUiNoContentPadding"
 	>
+
 		<semantic:titleHeading>
 			<Title
 				id="listPageTitle"
@@ -17,6 +19,9 @@
 			/>
 		</semantic:titleHeading>
 		<semantic:content>
+
+             
+                
 			<smartTable:SmartTable
 				xmlns:smartTable="sap.ui.comp.smarttable"
 				xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
@@ -31,6 +36,7 @@
 				showFullScreenButton="true"
 				requestAtLeastFields=""
 				busyIndicatorDelay="{listView>/delay}"
+                
 			>
 				<Table
 					id="list"
@@ -43,10 +49,14 @@
 					mode="SingleSelectMaster"
 					growing="true"
 					growingScrollToLoad="true" 
+                    growingThreshold="30"
 					updateFinished=".onUpdateFinished"
 					selectionChange=".onSelectionChange"
 				/>
 			</smartTable:SmartTable>
+ 
+            
 		</semantic:content>
+        
 	</semantic:SemanticPage>
 </mvc:View>

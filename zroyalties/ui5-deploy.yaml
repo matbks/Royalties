@@ -15,7 +15,10 @@ builder:
       configuration:
         target:
           url: https://vhagyds4ci.sap.agrogalaxy.com.br:44300
-          client: "130"
+          client: "100"
+        credentials:
+          username: env:XYZ_USER
+          password: env:XYZ_PASSWORD
         app:
           name: Z_ADO_ROYALTIES
           description: Monitor de Royalties
