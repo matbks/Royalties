@@ -87,7 +87,7 @@ sap.ui.define([
          */
         _onObjectMatched: function (oEvent) {
             var sObjectId =  oEvent.getParameter("arguments").objectId;
-            this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
+            this.getModel("appView").setProperty("/layout", "TwoColumnsBeginExpanded");
             this.getModel().metadataLoaded().then( function() {
                 var sObjectPath = this.getModel().createKey("ZADOC_ROYALTIES_MONITOR", {
                     EdcNum:  sObjectId

@@ -1,89 +1,44 @@
 <mvc:View
-    controllerName="royalties.zroyalties.controller.Detail"
-    xmlns="sap.m"
-    xmlns:semantic="sap.f.semantic"
-    xmlns:mvc="sap.ui.core.mvc">
-
-    <semantic:SemanticPage
-        id="detailPage"
-        busy="{detailView>/busy}"
-        busyIndicatorDelay="{detailView>/delay}">
-        <semantic:titleHeading>
-            <Title
-                text="{EdcNum}"
-                level="H2"/>
-        </semantic:titleHeading>
-        <semantic:headerContent>
-            <ObjectAttribute title="{i18n>priceTitle}"/>
-            <ObjectNumber />
-        </semantic:headerContent>
-        <semantic:content>
-
-            <Table
-                id="lineItemsList"
-                width="auto"
-                items="{ZADOC_ROYALTIES_LOG}"
-                updateFinished=".onListUpdateFinished"
-                noDataText="{i18n>detailLineItemTableNoDataText}"
-                busyIndicatorDelay="{detailView>/lineItemTableDelay}">
-                <headerToolbar>
-                    <Toolbar>
-                        <Title
-                            id="lineItemsTitle"
-                            text="{detailView>/lineItemListTitle}"
-                            titleStyle="H3"
-                            level="H3"/>
-                    </Toolbar>
-                </headerToolbar>
-                <columns>
-                    <Column>
-                        <Text text="{i18n>detailLineItemTableIDColumn}"/>
-                    </Column>
-                    <Column
-                        minScreenWidth="Tablet"
-                        demandPopin="true"
-                        hAlign="End">
-                        <Text text="{i18n>detailLineItemTableUnitNumberColumn}"/>
-                    </Column>
-                </columns>
-                <items>
-                    <ColumnListItem>
-                        <cells>
-                            <ObjectIdentifier
-                                title="{EdcNumber}"
-                                text="{EdcNumber}"/>
-                            <ObjectNumber />
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
-        </semantic:content>
-        <!--Semantic ShareMenu Buttons-->
-        <semantic:sendEmailAction>
-            <semantic:SendEmailAction
-                id="shareEmail"
-                press=".onSendEmailPress"/>
-        </semantic:sendEmailAction>
-
-        <semantic:closeAction>
-            <semantic:CloseAction
-                    id="closeColumn"
-                    press=".onCloseDetailPress"/>
-        </semantic:closeAction>
-
-        <semantic:fullScreenAction>
-            <semantic:FullScreenAction
-                    id="enterFullScreen"
-                    visible="{= !${device>/system/phone} &amp;&amp; !${appView>/actionButtonsInfo/midColumn/fullScreen}}"
-                    press=".toggleFullScreen"/>
-        </semantic:fullScreenAction>
-        <semantic:exitFullScreenAction>
-            <semantic:ExitFullScreenAction
-                    id="exitFullScreen"
-                    visible="{= !${device>/system/phone} &amp;&amp; ${appView>/actionButtonsInfo/midColumn/fullScreen}}"
-                    press=".toggleFullScreen"/>
-        </semantic:exitFullScreenAction>
-
-    </semantic:SemanticPage>
-
+	controllerName="royalties.zroyalties.controller.Detail"
+	xmlns="sap.m"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:mvc="sap.ui.core.mvc"
+>
+	<semantic:SemanticPage
+		id="detailPage"
+		busy="{detailView>/busy}"
+		busyIndicatorDelay="{detailView>/delay}"
+	>
+		<semantic:content>
+			<smartTable:SmartTable
+				xmlns:smartTable="sap.ui.comp.smarttable"
+				xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+				entitySet="ZADOC_ROYALTIES_LOG"
+				smartFilterId="sfb_production_processing"
+				tableType="Table"
+				header="{i18n>items}"
+				persistencyKey="SmartTableAnalytical_Explored"
+				class="sapUiResponsiveContentPadding"
+				app:useSmartToggle="true"
+				initiallyVisibleFields="Plant,Romaneio,EdcNumber,CreationDate,CreationTime,Discharge,FiscalYear,Balance,DischargeStatus"
+				enableAutoBinding="true"
+				showFullScreenButton="false"
+				tableBindingPath="to_RoyaltiesLog"
+				requestAtLeastFields="EdcNumber"
+			>
+				<Table
+					id="list3"
+					includeItemInSelection="true"
+					contextualWidth="auto"
+					autoPopinMode="true"
+					sticky="ColumnHeaders"
+					busyIndicatorDelay="{listView>/delay}"
+					noDataText="{listView>/noDataText}"
+					mode="SingleSelectMaster"
+					growing="true"
+					growingScrollToLoad="true"
+				/>
+			</smartTable:SmartTable>
+		</semantic:content>
+	</semantic:SemanticPage>
 </mvc:View>
