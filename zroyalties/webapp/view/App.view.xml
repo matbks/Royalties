@@ -4,7 +4,9 @@
     height="100%"
     xmlns="sap.m"
     xmlns:f="sap.f"
-    xmlns:mvc="sap.ui.core.mvc">
+    xmlns:mvc="sap.ui.core.mvc" 
+    id="appView">
+    
     <App
         id="app"
         busy="{appView>/busy}"

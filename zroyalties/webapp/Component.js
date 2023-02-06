@@ -26,6 +26,10 @@ sap.ui.define([
             // set the device model
             this.setModel(models.createDeviceModel(), "device");
 
+            this.setModel(models.createMonitorModel(), "Monitor");
+
+            this.setModel(models.createDischargeModel(), "Discharge");    
+
             // call the base component's init function and create the App view
             UIComponent.prototype.init.apply(this, arguments);
 

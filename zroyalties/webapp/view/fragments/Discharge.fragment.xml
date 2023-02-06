@@ -1,0 +1,52 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+>
+	<Dialog
+		id="openDialog"
+		title="{i18n>discharge}"
+	>
+		<beginButton>
+			<Button
+				text="{i18n>save}"
+				type="Accept"
+				press="handleSaveBtnPress"
+			/>
+		</beginButton>
+		<endButton>
+			<Button
+				text="{i18n>cancel}"
+				type="Reject"
+				press="handleCancelBtnPress"
+			/>
+		</endButton>
+		<f:SimpleForm
+			id="RegisterForm"
+			editable="true"
+		>
+			<f:content>
+				<!-- <Label text="{/#Customers/Cpf/@sap:label}"/>
+				<MaskInput
+					value="{Customer>/Cpf}"
+					mask="999.999.999-99"
+					placeholder="{i18n>addCPF}"
+				/> -->
+				<Label text="Propriedade"/>
+				<Input value="{Monitor>/ContractNum}" editable="false" enabled="false"/>
+				<Label text="{i18n>DischargeAmount}"/>
+				<Input
+					value="{Monitor>/Discharge}"
+					placeholder="{i18n>TypeDischargeAmount}"
+					id="dischargeInput"
+				/>
+				<Label text="{i18n>BalanceAmount}"/>
+				<Input
+					value="{Monitor>/Discharge}"
+					placeholder="{i18n>TypeBalanceAmount}"
+					id="balanceInput"
+				/>
+			</f:content>
+		</f:SimpleForm>
+	</Dialog>
+</c:FragmentDefinition>

@@ -1,28 +1,84 @@
 <mvc:View
 	controllerName="royalties.zroyalties.controller.List"
 	xmlns="sap.m"
-	xmlns:semantic="sap.f.semantic"
+	xmlns:semantic="sap.m.semantic"
 	xmlns:mvc="sap.ui.core.mvc"
+	id="monitorView"
 >
-	<semantic:SemanticPage
-		id="listPage"
-		preserveHeaderStateOnScroll="true"
-		toggleHeaderOnTitleClick="false" 
-        class="sapUiNoContentPadding"
+	<semantic:FullscreenPage
+		id="page02" 
+		busy="{ProdProcView>/busy}"
+		title="{i18n>mainTitle}"
+		showFooter="false"
 	>
-
-		<semantic:titleHeading>
-			<Title
-				id="listPageTitle"
-				text="{listView>/title}"
-				level="H2"
-			/>
-		</semantic:titleHeading>
 		<semantic:content>
-
-             
-                
+			<smartFilterBar:SmartFilterBar
+				xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+				id="sfb_monitor"
+				entitySet="ZADOC_ROYALTIES_MONITOR"
+				persistencyKey="SmartFilter_Explored"
+				liveMode="true"
+			>
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration
+						key="Property"
+						visibleInAdvancedArea="true"
+						id="filterPlant2324"
+					/>
+				</smartFilterBar:controlConfiguration>
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration
+						key="ApplicationDocNum"
+						visibleInAdvancedArea="true"
+						id="productionOrderSFB2"
+					/>
+				</smartFilterBar:controlConfiguration>
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration
+						key="CreatedBy"
+						visibleInAdvancedArea="true"
+						id="filterProduct2232"
+					/>
+				</smartFilterBar:controlConfiguration>
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration
+						key="EdcNum"
+						visibleInAdvancedArea="true"
+						id="filterProduct33324"
+					/>
+				</smartFilterBar:controlConfiguration>
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration
+						key="ContractNum"
+						visibleInAdvancedArea="true"
+						id="filterProduct32343"
+					/>
+				</smartFilterBar:controlConfiguration>
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration
+						key="ApplicationDocNum"
+						visibleInAdvancedArea="true"
+						id="filterProduct34235"
+						label="{i18n>peneira}"
+					/>
+				</smartFilterBar:controlConfiguration>
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration
+						key="CreatedOn"
+						visibleInAdvancedArea="true"
+						id="filterProduct34323"
+					/>
+				</smartFilterBar:controlConfiguration>
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration
+						key="Partner"
+						visibleInAdvancedArea="true"
+						id="filterProduc2t3353"
+					/>
+				</smartFilterBar:controlConfiguration>
+			</smartFilterBar:SmartFilterBar>
 			<smartTable:SmartTable
+				id="st_monitor"
 				xmlns:smartTable="sap.ui.comp.smarttable"
 				xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 				entitySet="ZADOC_ROYALTIES_MONITOR"
@@ -31,12 +87,12 @@
 				persistencyKey="SmartTableAnalytical_Explored"
 				class="sapUiResponsiveContentPadding"
 				app:useSmartToggle="true"
-				initiallyVisibleFields="Property,Material,MaterialDescription,ApplicationQuantity,CreatedBy,CreatedOn,ChangedBy,ChangedOn,Ticket,Romaaneio,TicketDate,Partner,PartnerId,PartnerDescription,Safra,Plant,EdcNum"
+				initiallyVisibleFields="Material,MaterialDescription,Property,ApplicationQuantity,CreatedBy,CreatedOn,ChangedBy,ChangedOn,Ticket,Romaneio,TicketDate,Partner,PartnerId,PartnerDescription,Safra,Plant,EdcNum"
 				enableAutoBinding="true"
 				showFullScreenButton="true"
 				requestAtLeastFields=""
 				busyIndicatorDelay="{listView>/delay}"
-                
+				smartFilterId="sfb_monitor"
 			>
 				<Table
 					id="list"
@@ -48,15 +104,39 @@
 					noDataText="{listView>/noDataText}"
 					mode="SingleSelectMaster"
 					growing="true"
-					growingScrollToLoad="true" 
-                    growingThreshold="30"
+					growingScrollToLoad="true"
+					growingThreshold="30"
 					updateFinished=".onUpdateFinished"
 					selectionChange=".onSelectionChange"
 				/>
+				<smartTable:customToolbar>
+					<OverflowToolbar design="Transparent">
+						<ToolbarSpacer/>
+						<OverflowToolbarButton
+							icon="sap-icon://arrow-bottom"
+							text="{i18n>discharge}" 
+							tooltip="{i18n>discharge}"
+							press="onDischarge" 
+						/>
+					</OverflowToolbar>
+				</smartTable:customToolbar>
+
 			</smartTable:SmartTable>
- 
-            
 		</semantic:content>
-        
-	</semantic:SemanticPage>
+		<semantic:messagesIndicator>
+			<semantic:MessagesIndicator
+				id="MessageIndicator"
+				press="onMessagesButtonPress"
+			/>
+		</semantic:messagesIndicator>
+		<!-- <semantic:customFooterContent>
+			<Button
+				id="ButtonSolicitation"
+				icon="sap-icon://arrow-bottom"
+				text="{i18n>discharge}"
+				type="Ghost"
+				press="onDischarge"
+			/>
+		</semantic:customFooterContent> -->
+	</semantic:FullscreenPage>
 </mvc:View>

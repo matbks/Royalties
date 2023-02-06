@@ -11,19 +11,39 @@
 	> -->
 
     <semantic:FullscreenPage
-		id="page0"
-		floatingFooter="true"
+		id="page0" 
 		class="noScroll"
 		busy="{ProdProcView>/busy}"
 		enableScrolling="false"
         title="{i18n>detailTitle}"
- 
+		showFooter="false"
+		customHeaderContent="true"
 	> 
+ 
         <Title
             id="listPageTitle"
             text="{listView>/title}"
             level="H2"
         /> 
+
+		<semantic:customHeaderContent>
+			<Button
+				activeIcon=""
+				ariaHasPopup="None"
+				enabled="true"
+				icon="sap-icon://decline"
+				iconDensityAware="true"
+				iconFirst="true"
+				text=""
+				textDirection="Inherit"
+				type="Default"
+				width=""
+				press="onCloseDetailPress"
+
+			>
+				
+			</Button>
+		</semantic:customHeaderContent>
 
 		<semantic:content>
 			<smartTable:SmartTable
@@ -36,11 +56,13 @@
 				persistencyKey="SmartTableAnalytical_Explored"
 				class="sapUiResponsiveContentPadding"
 				app:useSmartToggle="true"
-				initiallyVisibleFields="CreationDate,CreationTime,Discharge,FiscalYear,Balance,DischargeStatus"
+				initiallyVisibleFields="Discharge,CreatedOn,FiscalYear,Balance,DischargeStatus"
 				enableAutoBinding="true"
 				showFullScreenButton="false"
 				tableBindingPath="to_RoyaltiesLog"
 				requestAtLeastFields="EdcNumber"
+				id="st_log"
+				
                 
 			>
 				<Table
@@ -54,25 +76,25 @@
 					mode="SingleSelectMaster"
 					growing="true"
 					growingScrollToLoad="true"
+					
 				/>
+
+				<smartTable:customToolbar>
+									<OverflowToolbar design="Transparent">
+										<ToolbarSpacer/> 
+										<OverflowToolbarButton
+											icon="sap-icon://delete"
+											text="{i18n>delete}"
+											tooltip="{i18n>delete}"
+											press="onDischargeDelete"
+										/>
+									
+									</OverflowToolbar>
+								</smartTable:customToolbar>
 			</smartTable:SmartTable>
 		</semantic:content>
         
-        <semantic:messagesIndicator>
-			<semantic:MessagesIndicator
-				id="MessageIndicator"
-				press="onMessagesButtonPress"
-			/>
-		</semantic:messagesIndicator>
         
-
-		<semantic:customFooterContent>
-            <Button
-				id="ButtonSolicitation"
-				text="{i18n>discharge}"
-				press="SampleSolicitation" 
-			/>
-        </semantic:customFooterContent>
 
 	</semantic:FullscreenPage>
 </mvc:View>

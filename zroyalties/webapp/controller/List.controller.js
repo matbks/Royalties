@@ -9,6 +9,8 @@ sap.ui.define(
     "sap/ui/Device",
     "sap/ui/core/Fragment",
     "../model/formatter",
+    "sap/m/MessageToast",
+    "sap/ui/vk/Material",
   ],
   function (
     BaseController,
@@ -19,7 +21,9 @@ sap.ui.define(
     GroupHeaderListItem,
     Device,
     Fragment,
-    formatter
+    formatter,
+    MessageToast,
+    Material
   ) {
     "use strict";
 
@@ -35,6 +39,14 @@ sap.ui.define(
        * @public
        */
       onInit: function () {
+
+       this.getView().addEventDelegate({
+          onAfterShow: function (oEvent) { 
+            debugger;
+            this.byId("st_monitor").getTable().removeSelections();
+          }.bind(this)
+        }, this.getView());
+ 
         // Control state model
         var oList = this.byId("list"),
           oViewModel = this._createViewModel(),
@@ -233,6 +245,124 @@ sap.ui.define(
         });
       },
 
+      onDischarge: function (oEvent) {
+        let oSmartTable1 = this.getView().byId("st_monitor");
+        let oSmartTable = oSmartTable1.getTable();
+        var SmartTableLine = oSmartTable._aSelectedPaths;
+        if (SmartTableLine.length < 1) {
+          MessageToast.show(
+            this.getOwnerComponent()
+              .getModel("i18n")
+              .getResourceBundle()
+              .getText("nullRegisterNotAllowed")
+          );
+        } else {
+          var SelectedItem = oSmartTable
+            .getModel()
+            .getProperty(SmartTableLine.toString());
+
+          var oView = this.getView();
+          var modelMonitor = oView.getModel("Monitor");
+          modelMonitor.setData(SelectedItem);
+
+          if (!this.byId("openDialog")) {
+            Fragment.load({
+              id: oView.getId(),
+              name: "royalties.zroyalties.view.fragments.Discharge",
+              controller: this,
+            }).then(function (oDialog) {
+              oView.addDependent(oDialog);
+              oDialog.open();
+            });
+          } else {
+            this.byId("openDialog").open();
+          }
+
+          // this.callTransaction("ProductionOrder", "change", {
+          //   ProductionOrder: SelectedItem.ProductionOrder,
+          // });
+          // return false;
+        }
+      },
+
+      handleSaveBtnPress: function (oEvent) {
+        var oModelMonitor = this.getView().getModel("Monitor");
+        var oModel = this.getView().getModel(); 
+        var results = oModelMonitor.getData();
+        var discharge = this.byId("dischargeInput").mProperties.value;
+        var balanceInput = this.byId("balanceInput").mProperties.value;
+
+        var d = new Date();
+        var currentYear = d.getFullYear(); 
+        debugger;
+
+        var payload = {
+          Plant: oModelMonitor.getData().Plant,
+          Romaneio: oModelMonitor.getData().Romaneio,
+          Edcnumber: oModelMonitor.getData().EdcNum,
+          Discharge: discharge,
+          Fiscalyear: currentYear.toString(),
+          Balance: balanceInput,
+          Dischargestatus: "BAIXA MANUAL", 
+          Createdon: new Date(),  
+          Operation: '1',
+        }
+ 
+        oModel.create("/DischargeQtySet", payload, {
+          success: function (oData, oResponse) {
+            if (oResponse.statusCode == "201") {
+              var msg = this.getOwnerComponent()
+                .getModel("i18n")
+                .getResourceBundle()
+                .getText("discharged");
+                debugger;
+              // MessageBox.success(msg);
+              MessageToast.show(msg);
+              this.clearModel(oModelMonitor);
+              this.handleCancelBtnPress();
+              this.model().refresh(true);
+            }
+          }.bind(this),
+
+          error: function (oError) {
+            var oSapMessage = JSON.parse(oError.responseText);
+            var msg = oSapMessage.error.message.value;
+            // MessageBox.error(msg);
+            MessageToast.show(msg);
+          },
+        });
+      },
+
+      handleCancelBtnPress: function () {
+        this.byId("openDialog").close();
+        var modelMonitor = this.getView().getModel("Monitor");
+        this.clearModel(modelMonitor);
+      },
+
+      clearModel: function (oModel) {
+        oModel.setData({
+          EdcNum: "",
+          ContractNum: "",
+          ApplicationDocnum: "",
+          EdcType: "",
+          Property: "",
+          Material: "",
+          MaterialDescription: "",
+          ApplicationQuantity: "",
+          CreatedBy: "",
+          CreatedOn: "",
+          ChangeBy: "",
+          ChangeOn: "",
+          Ticket: "",
+          Romaneio: "",
+          TicketDate: "",
+          Partner: "",
+          PartnerId: "",
+          PartnerDescription: "",
+          Safra: "",
+          Plant: "",
+        });
+      },
       /**
        * Event handler for navigating back.
        * We navigate back in the browser history
