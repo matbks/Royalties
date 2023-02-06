@@ -35,14 +35,12 @@
 				<Label text="Propriedade"/>
 				<Input value="{Monitor>/ContractNum}" editable="false" enabled="false"/>
 				<Label text="{i18n>DischargeAmount}"/>
-				<Input
-					value="{Monitor>/Discharge}"
+				<Input 
 					placeholder="{i18n>TypeDischargeAmount}"
 					id="dischargeInput"
 				/>
 				<Label text="{i18n>BalanceAmount}"/>
-				<Input
-					value="{Monitor>/Discharge}"
+				<Input 
 					placeholder="{i18n>TypeBalanceAmount}"
 					id="balanceInput"
 				/>

@@ -87,7 +87,7 @@
 				persistencyKey="SmartTableAnalytical_Explored"
 				class="sapUiResponsiveContentPadding"
 				app:useSmartToggle="true"
-				initiallyVisibleFields="Material,MaterialDescription,Property,ApplicationQuantity,CreatedBy,CreatedOn,ChangedBy,ChangedOn,Ticket,Romaneio,TicketDate,Partner,PartnerId,PartnerDescription,Safra,Plant,EdcNum"
+				initiallyVisibleFields="Material,MaterialDescription,Property,PartnerDescription,ApplicationQuantity,CreatedBy,CreatedOn,ChangedBy,ChangedOn,Ticket,Romaneio,TicketDate,Partner,PartnerId,PartnerDescription,Safra,Plant,EdcNum"
 				enableAutoBinding="true"
 				showFullScreenButton="true"
 				requestAtLeastFields=""
@@ -110,7 +110,7 @@
 					selectionChange=".onSelectionChange"
 				/>
 				<smartTable:customToolbar>
-					<OverflowToolbar design="Transparent">
+					<!-- <OverflowToolbar design="Transparent">
 						<ToolbarSpacer/>
 						<OverflowToolbarButton
 							icon="sap-icon://arrow-bottom"
@@ -118,7 +118,7 @@
 							tooltip="{i18n>discharge}"
 							press="onDischarge" 
 						/>
-					</OverflowToolbar>
+					</OverflowToolbar> -->
 				</smartTable:customToolbar>
 
 			</smartTable:SmartTable>

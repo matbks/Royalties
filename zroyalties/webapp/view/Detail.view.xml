@@ -41,8 +41,8 @@
 				press="onCloseDetailPress"
 
 			>
-				
-			</Button>
+
+		  </Button> 
 		</semantic:customHeaderContent>
 
 		<semantic:content>
@@ -82,6 +82,14 @@
 				<smartTable:customToolbar>
 									<OverflowToolbar design="Transparent">
 										<ToolbarSpacer/> 
+										
+										<OverflowToolbarButton
+										icon="sap-icon://arrow-bottom"
+										text="{i18n>discharge}" 
+										tooltip="{i18n>discharge}"
+										press="onDischarge" 
+										/>
+
 										<OverflowToolbarButton
 											icon="sap-icon://delete"
 											text="{i18n>delete}"
