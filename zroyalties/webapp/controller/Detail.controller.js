@@ -101,7 +101,7 @@ sap.ui.define(
                 .getText("discharged");
               debugger;
               // MessageBox.success(msg);
-              
+
               logSmartTable.rebindTable();
               MessageToast.show(msg);
               oModelMonitor.setData(null);
@@ -295,9 +295,7 @@ sap.ui.define(
         this.getRouter().navTo("list");
         sap.ui
           .getCore()
-          .byId(
-            "application-royaltieszroyalties-display-component---list--st_monitor"
-          )
+          .byId("container-royalties.zroyalties---list--st_monitor")
           .getTable()
           .removeSelections();
       },
@@ -306,7 +304,7 @@ sap.ui.define(
         let oSmartTable1 = sap.ui
           .getCore()
           .byId(
-            "application-royaltieszroyalties-display-component---list--st_monitor"
+            "container-royalties.zroyalties---list--st_monitor"
           );
         // let oSmartTable1 = this.getView().byId("st_monitor");
         let oSmartTable = oSmartTable1.getTable();
