@@ -292,39 +292,45 @@ sap.ui.define(
         );
         // No item should be selected on list after detail page is closed
         // this.getOwnerComponent().oListSelector.clearListListSelection();
-        this.getRouter().navTo("list");
         sap.ui
           .getCore()
           .byId("container-royalties.zroyalties---list--st_monitor")
           .getTable()
           .removeSelections();
+
+          this.getRouter().navTo("list");
       },
 
       onDischarge: function (oEvent) {
-        let oSmartTable1 = sap.ui
-          .getCore()
-          .byId(
-            "container-royalties.zroyalties---list--st_monitor"
-          );
-        // let oSmartTable1 = this.getView().byId("st_monitor");
-        let oSmartTable = oSmartTable1.getTable();
-        var SmartTableLine = oSmartTable._aSelectedPaths;
-        if (SmartTableLine.length < 1) {
-          MessageToast.show(
-            this.getOwnerComponent()
-              .getModel("i18n")
-              .getResourceBundle()
-              .getText("nullRegisterNotAllowed")
-          );
-        } else {
-          var SelectedItem = oSmartTable
-            .getModel()
-            .getProperty(SmartTableLine.toString());
+         
+        // let oSmartTable1 = sap.ui
+        //   .getCore()
+        //   .byId(
+        //     "container-royalties.zroyalties---list--st_monitor"
+        //   );
+        // // let oSmartTable1 = this.getView().byId("st_monitor");
+        // let oSmartTable = oSmartTable1.getTable();
+        // var SmartTableLine = oSmartTable._aSelectedPaths;
+        // if (SmartTableLine.length < 1) {
+        //   MessageToast.show(
+        //     this.getOwnerComponent()
+        //       .getModel("i18n")
+        //       .getResourceBundle()
+        //       .getText("nullRegisterNotAllowed")
+        //   );
+        // } else {
+        //   var SelectedItem = oSmartTable
+        //     .getModel()
+        //     .getProperty(SmartTableLine.toString());
 
           var oView = this.getView();
-          var modelMonitor = oView.getModel("Monitor");
-          modelMonitor.setData(SelectedItem);
-
+          // var modelMonitor = oView.getModel("Monitor");
+          // modelMonitor.setData(SelectedItem);
+          var monitorModel = this.getOwnerComponent().getModel("Monitor")
+          
+          var actualBalance = monitorModel.getData().ApplicationQuantity; 
+          monitorModel.setProperty("/Balance", this.getBalance(actualBalance) );
+          debugger;   
           if (!this.byId("openDialog")) {
             Fragment.load({
               id: oView.getId(),
@@ -337,12 +343,23 @@ sap.ui.define(
           } else {
             this.byId("openDialog").open();
           }
+ 
+        // }
+      },
 
-          // this.callTransaction("ProductionOrder", "change", {
-          //   ProductionOrder: SelectedItem.ProductionOrder,
-          // });
-          // return false;
+      getBalance: function(actualBalance){
+        var balance = 0.00;
+        let oSmartTableLogs = this.getView().byId("st_log");  
+        var items_length = oSmartTableLogs.getTable().getItems().length;
+        debugger;
+        for ( var i = 0; i < items_length ; i++){
+          var row = oSmartTableLogs.getTable().getItems()[i].getBindingContext().getObject()
+          if ( !row.Discharge.includes(',') )
+          row.Discharge = row.Discharge;
+          balance = balance + parseInt(row.Discharge);
         }
+        var sum = actualBalance - balance
+        return ( (sum >= 0) ? sum : '0,00' ).toFixed(2).toString();
       },
 
       /**
@@ -415,7 +432,7 @@ sap.ui.define(
                 var msg = this.getOwnerComponent()
                   .getModel("i18n")
                   .getResourceBundle()
-                  .getText("discharged");
+                  .getText("dischargeDeleted");
                 oSmartTable1.rebindTable();
                 // MessageBox.success(msg);
                 MessageToast.show(msg);

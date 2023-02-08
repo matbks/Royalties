@@ -209,6 +209,15 @@ sap.ui.define(
        * @public
        */
       onSelectionChange: function (oEvent) {
+
+        let oSmartTable1 = this.getView().byId("st_monitor");
+        let oSmartTable = oSmartTable1.getTable();
+        var SmartTableLine = oSmartTable._aSelectedPaths;       
+          var SelectedItem = oSmartTable
+            .getModel()
+            .getProperty(SmartTableLine.toString());
+        var  oModelMonitor = this.getView().getModel("Monitor"); 
+        oModelMonitor.setData(SelectedItem);
         var oList = oEvent.getSource(),
           bSelected = oEvent.getParameter("selected");
 

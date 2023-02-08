@@ -33,17 +33,22 @@
 					placeholder="{i18n>addCPF}"
 				/> -->
 				<Label text="Propriedade"/>
-				<Input value="{Monitor>/ContractNum}" editable="false" enabled="false"/>
-				<Label text="{i18n>DischargeAmount}"/>
-				<Input 
-					placeholder="{i18n>TypeDischargeAmount}"
-					id="dischargeInput"
-				/>
+				<Input value="{Monitor>/Property}" editable="false" enabled="false"/>
+				
 				<Label text="{i18n>BalanceAmount}"/>
 				<Input 
+					editable="false" 
+					enabled="false"
+					value="{Monitor>/Balance}"
 					placeholder="{i18n>TypeBalanceAmount}"
 					id="balanceInput"
 				/>
+
+				<Label text="{i18n>DischargeAmount}"/>
+					<Input 
+						placeholder="{i18n>TypeDischargeAmount}"
+						id="dischargeInput"
+					/>
 			</f:content>
 		</f:SimpleForm>
 	</Dialog>

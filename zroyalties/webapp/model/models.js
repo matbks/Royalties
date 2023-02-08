@@ -40,6 +40,7 @@ sap.ui.define(
           PartnerDescription: "",
           Safra: "",
           Plant: "",
+          Balance: "",
         });
         return oModel;
       },
@@ -52,10 +53,11 @@ sap.ui.define(
             Creationtime: '',
             Discharge: '',
             Fiscalyear: '',
-            Balance: '',
+            ApplicationQuantity: '',
             Creationdate: '',
             Creationdate: '',
-            Dischargestatus: '',            
+            Dischargestatus: '',  
+            Balance: '',          
         });
         
         return oModel;
