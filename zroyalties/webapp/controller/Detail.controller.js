@@ -125,7 +125,7 @@ sap.ui.define(
         this.byId("dischargeInput").mProperties.value = "";
         this.byId("balanceInput").mProperties.value = "";
 
-        var modelMonitor = this.getOwnerComponent().getModel();
+        var modelMonitor = this.getOwnerComponent().getModel("Monitor");
         modelMonitor.setData(null);
       },
 
@@ -303,25 +303,25 @@ sap.ui.define(
 
       onDischarge: function (oEvent) {
          
-        // let oSmartTable1 = sap.ui
-        //   .getCore()
-        //   .byId(
-        //     "container-royalties.zroyalties---list--st_monitor"
-        //   );
-        // // let oSmartTable1 = this.getView().byId("st_monitor");
-        // let oSmartTable = oSmartTable1.getTable();
-        // var SmartTableLine = oSmartTable._aSelectedPaths;
-        // if (SmartTableLine.length < 1) {
-        //   MessageToast.show(
-        //     this.getOwnerComponent()
-        //       .getModel("i18n")
-        //       .getResourceBundle()
-        //       .getText("nullRegisterNotAllowed")
-        //   );
-        // } else {
-        //   var SelectedItem = oSmartTable
-        //     .getModel()
-        //     .getProperty(SmartTableLine.toString());
+        let oSmartTable1 = sap.ui
+          .getCore()
+          .byId(
+            "container-royalties.zroyalties---list--st_monitor"
+          );
+        // let oSmartTable1 = this.getView().byId("st_monitor");
+        let oSmartTable = oSmartTable1.getTable();
+        var SmartTableLine = oSmartTable._aSelectedPaths;
+        if (SmartTableLine.length < 1) {
+          MessageToast.show(
+            this.getOwnerComponent()
+              .getModel("i18n")
+              .getResourceBundle()
+              .getText("nullRegisterNotAllowed")
+          );
+        } else {
+          var SelectedItem = oSmartTable
+            .getModel()
+            .getProperty(SmartTableLine.toString());
 
           var oView = this.getView();
           // var modelMonitor = oView.getModel("Monitor");
@@ -344,7 +344,7 @@ sap.ui.define(
             this.byId("openDialog").open();
           }
  
-        // }
+        }
       },
 
       getBalance: function(actualBalance){
@@ -354,9 +354,11 @@ sap.ui.define(
         debugger;
         for ( var i = 0; i < items_length ; i++){
           var row = oSmartTableLogs.getTable().getItems()[i].getBindingContext().getObject()
-          if ( !row.Discharge.includes(',') )
+          if ( !row.Discharge.includes(',') && !row.Discharge == "" )
+          {
           row.Discharge = row.Discharge;
           balance = balance + parseInt(row.Discharge);
+          }
         }
         var sum = actualBalance - balance
         return ( (sum >= 0) ? sum : '0,00' ).toFixed(2).toString();
