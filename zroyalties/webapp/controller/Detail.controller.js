@@ -328,7 +328,7 @@ sap.ui.define(
           // modelMonitor.setData(SelectedItem);
           var monitorModel = this.getOwnerComponent().getModel("Monitor")
           
-          var actualBalance = monitorModel.getData().ApplicationQuantity; 
+          var actualBalance = parseInt(monitorModel.getData().ApplicationQuantity);  
           monitorModel.setProperty("/Balance", this.getBalance(actualBalance) );
           debugger;   
           if (!this.byId("openDialog")) {
@@ -406,9 +406,7 @@ sap.ui.define(
               .getText("nullRegisterNotAllowed")
           );
         } else {
-          var SelectedItem = oSmartTable
-            .getModel()
-            .getProperty(SmartTableLine.toString());
+          var SelectedItem = oSmartTable.getModel().getProperty(SmartTableLine.toString());
 
           var oView = this.getView();
           var oModelLog = oView.getModel("Discharge");
@@ -439,7 +437,7 @@ sap.ui.define(
                 // MessageBox.success(msg);
                 MessageToast.show(msg);
                 oModelLog.setData(null);
-                this.handleCancelBtnPress();
+                //this.handleCancelBtnPress();
                 this.model().refresh(true);
               }
             }.bind(this),
