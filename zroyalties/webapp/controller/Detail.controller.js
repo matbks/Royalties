@@ -74,11 +74,21 @@ sap.ui.define(
         var oModelMonitor = this.getOwnerComponent().getModel("Monitor");
         var oModel = this.getView().getModel();
         var discharge = this.byId("dischargeInput").mProperties.value;
-        if (discharge) {
+        if (discharge) {  
+          
           var balanceInput = Math.floor(
             this.byId("balanceInput").mProperties.value
           );
+          if ( discharge > balanceInput )
+          {
+            MessageToast.show("Insira uma baixa de valor inferior ao saldo"); 
+          }
+         else{
+          
+          if ( discharge < 0 )
+          MessageToast.show("Insira um valor válido");
 
+          else {
           var d = new Date();
           var currentYear = d.getFullYear();
           debugger;
@@ -116,7 +126,7 @@ sap.ui.define(
               MessageToast.show(msg);
             },
           });
-        } else {
+        }}} else {
           MessageToast.show("Preencha os campos obrigatórios");
         }
       },
@@ -124,7 +134,8 @@ sap.ui.define(
       handleCancelBtnPress: function () {
         this.byId("dischargeInput").mProperties.value = "";  
         this.byId("balanceInput").mProperties.value = "";
-        this.byId("openDialog").close();
+        // this.byId("openDialog").close();
+        this.byId("openDialog").destroy();
         // var modelMonitor = this.getView().getModel("Monitor");
         
 
