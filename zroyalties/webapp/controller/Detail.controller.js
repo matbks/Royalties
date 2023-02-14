@@ -74,6 +74,7 @@ sap.ui.define(
         var oModelMonitor = this.getOwnerComponent().getModel("Monitor");
         var oModel = this.getView().getModel();
         var discharge = this.byId("dischargeInput").mProperties.value;
+        if (discharge){
         var balanceInput = Math.floor(
           this.byId("balanceInput").mProperties.value
         );
@@ -119,6 +120,9 @@ sap.ui.define(
             MessageToast.show(msg);
           },
         });
+      } else {
+        MessageToast.show("Preencha os campos obrigatórios");
+      }
       },
 
       handleCancelBtnPress: function () {
