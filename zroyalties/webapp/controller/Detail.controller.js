@@ -84,20 +84,23 @@ sap.ui.define(
             MessageToast.show("Insira uma baixa de valor inferior ao saldo"); 
           }
          else{
+
+          if ( discharge.includes(",") ){
+            discharge = discharge.toString().replace(",",".");
+          }
           
-          if ( discharge < 0 )
+          if ( discharge < 0 || isNaN(discharge) )
           MessageToast.show("Insira um valor válido");
 
           else {
           var d = new Date();
-          var currentYear = d.getFullYear();
-          debugger;
+          var currentYear = d.getFullYear(); 
 
           var payload = {
             Plant: oModelMonitor.oData.Plant,
             Romaneio: oModelMonitor.oData.Romaneio,
             Edcnumber: oModelMonitor.oData.EdcNum,
-            Discharge: discharge,
+            Discharge: discharge.toString(),
             Fiscalyear: currentYear.toString(),
             Balance: (balanceInput - discharge).toString(),
             Dischargestatus: "BAIXA MANUAL",
