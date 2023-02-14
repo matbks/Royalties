@@ -104,10 +104,8 @@ sap.ui.define(
                   .getText("discharged");
 
                 logSmartTable.rebindTable();
-                MessageToast.show(msg);
-                oModelMonitor.setData(null);
-                this.handleCancelBtnPress();
-                oModelMonitor.refresh(true);
+                MessageToast.show(msg); 
+                this.handleCancelBtnPress(); 
               }
             }.bind(this),
 
@@ -124,13 +122,14 @@ sap.ui.define(
       },
 
       handleCancelBtnPress: function () {
+        this.byId("dischargeInput").mProperties.value = "";  
+        this.byId("balanceInput").mProperties.value = "";
         this.byId("openDialog").close();
         // var modelMonitor = this.getView().getModel("Monitor");
-        this.byId("dischargeInput").setValue = "";
-        this.byId("balanceInput").setValue = "";
+        
 
-        var modelMonitor = this.getOwnerComponent().getModel("Monitor");
-        modelMonitor.setData(null);
+        // var modelMonitor = this.getOwnerComponent().getModel("Monitor");
+        // modelMonitor.setData(null);
       },
 
       /**
@@ -326,6 +325,7 @@ sap.ui.define(
 
           var oView = this.getView();
           var modelMonitor = oView.getModel("Monitor");
+          modelMonitor.refresh();
           modelMonitor.setData(SelectedItem);
           var monitorModel = this.getOwnerComponent().getModel("Monitor");
 
@@ -333,6 +333,7 @@ sap.ui.define(
             monitorModel.getData().ApplicationQuantity
           );
           monitorModel.setProperty("/Balance", this.getBalance(actualBalance));
+          // monitorModel.setProperty("/Balance", "881.00");
           if (!this.byId("openDialog")) {
             Fragment.load({
               id: oView.getId(),
@@ -349,7 +350,7 @@ sap.ui.define(
       },
 
       getBalance: function (actualBalance) {
-        var balance = 0.0;
+        var balance = 0.00;
         let oSmartTableLogs = this.getView().byId("st_log");
         var items_length = oSmartTableLogs.getTable().getItems().length;
         debugger;
@@ -396,58 +397,16 @@ sap.ui.define(
             this.getModel("appView").getProperty("/previousLayout")
           );
         }
-      },
-
-      onDischarge: function (oEvent) {
-        let oSmartTable1 = sap.ui
-          .getCore()
-          .byId("container-royalties.zroyalties---list--st_monitor");
-        // let oSmartTable1 = this.getView().byId("st_monitor");
-        let oSmartTable = oSmartTable1.getTable();
-        var SmartTableLine = oSmartTable._aSelectedPaths;
-        if (SmartTableLine.length < 1) {
-          MessageToast.show(
-            this.getOwnerComponent()
-              .getModel("i18n")
-              .getResourceBundle()
-              .getText("nullRegisterNotAllowed")
-          );
-        } else {
-          var SelectedItem = oSmartTable
-            .getModel()
-            .getProperty(SmartTableLine.toString());
-
-          var oView = this.getView();
-          var modelMonitor = oView.getModel("Monitor");
-          modelMonitor.setData(SelectedItem);
-          var monitorModel = this.getOwnerComponent().getModel("Monitor");
-
-          var actualBalance = parseInt(
-            monitorModel.getData().ApplicationQuantity
-          );
-          monitorModel.setProperty("/Balance", this.getBalance(actualBalance));
-          if (!this.byId("openDialog")) {
-            Fragment.load({
-              id: oView.getId(),
-              name: "royalties.zroyalties.view.fragments.Discharge",
-              controller: this,
-            }).then(function (oDialog) {
-              oView.addDependent(oDialog);
-              oDialog.open();
-            });
-          } else {
-            this.byId("openDialog").open();
-          }
-        }
-      },
+      }, 
 
       onDischargeDelete: function () {
         let oSmartTable1 = sap.ui
           .getCore()
           .byId("container-royalties.zroyalties---list--st_monitor");
-        // let oSmartTable1 = this.getView().byId("st_monitor");
+
         let oSmartTable = oSmartTable1.getTable();
         var SmartTableLine = oSmartTable._aSelectedPaths;
+
         if (SmartTableLine.length < 1) {
           MessageToast.show(
             this.getOwnerComponent()
@@ -456,14 +415,14 @@ sap.ui.define(
               .getText("nullRegisterNotAllowed")
           );
         } else {
+
           var SelectedHeader = oSmartTable
             .getModel()
             .getProperty(SmartTableLine.toString());
 
           var oView = this.getView();
-          var modelMonitor = oView.getModel("Monitor");
-          modelMonitor.setData(SelectedHeader);
-          var monitorModel = this.getOwnerComponent().getModel("Monitor");
+          var oModel = oView.getModel(); 
+          var oModelMonitor = this.getOwnerComponent().getModel("Monitor");
 
           let oSmartTableLog = this.getView().byId("st_log");
           let oSmartTable2 = oSmartTableLog.getTable();
@@ -485,8 +444,8 @@ sap.ui.define(
             var oModel = this.getView().getModel();
 
             var payload = {
-              Plant: monitorModel.getData().Plant,
-              Romaneio: monitorModel.getData().Romaneio,
+              Plant: oModelMonitor.getData().Plant,
+              Romaneio: oModelMonitor.getData().Romaneio,
               Edcnumber: oModelLog.getData().EdcNumber,
               Discharge: oModelLog.getData().Discharge,
               Fiscalyear: oModelLog.getData().FiscalYear,
@@ -506,15 +465,11 @@ sap.ui.define(
                       .getModel("i18n")
                       .getResourceBundle()
                       .getText("dischargeDeleted");
-                    oSmartTable1.rebindTable();
-                    // MessageBox.success(msg);
+                    oSmartTable1.rebindTable(); 
                     MessageToast.show(msg);
                     oModelLog.setData(null);
                     oSmartTableLog.rebindTable();
-                    MessageToast.show(msg);
-                    monitorModel.setData(null);
-                    this.handleCancelBtnPress();
-                    monitorModel.refresh(true);
+                    oModelMonitor.refresh(true);
                   }
                 }.bind(this),
 
