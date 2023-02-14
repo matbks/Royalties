@@ -446,7 +446,7 @@ sap.ui.define(
                 MessageToast.show(msg);
                 oModelLog.setData(null);
                 //this.handleCancelBtnPress();
-                this.model().refresh(true);
+                // this.model().refresh(true);
               }
             }.bind(this),
 
