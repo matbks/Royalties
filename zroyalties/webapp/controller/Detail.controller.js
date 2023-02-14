@@ -74,62 +74,60 @@ sap.ui.define(
         var oModelMonitor = this.getOwnerComponent().getModel("Monitor");
         var oModel = this.getView().getModel();
         var discharge = this.byId("dischargeInput").mProperties.value;
-        if (discharge){
-        var balanceInput = Math.floor(
-          this.byId("balanceInput").mProperties.value
-        );
+        if (discharge) {
+          var balanceInput = Math.floor(
+            this.byId("balanceInput").mProperties.value
+          );
 
-        var d = new Date();
-        var currentYear = d.getFullYear();
-        debugger;
+          var d = new Date();
+          var currentYear = d.getFullYear();
+          debugger;
 
-        var payload = {
-          Plant: oModelMonitor.oData.Plant,
-          Romaneio: oModelMonitor.oData.Romaneio,
-          Edcnumber: oModelMonitor.oData.EdcNum,
-          Discharge: discharge,
-          Fiscalyear: currentYear.toString(),
-          Balance: (balanceInput - discharge).toString(),
-          Dischargestatus: "BAIXA MANUAL",
-          Createdon: new Date(),
-          Operation: "1",
-        };
+          var payload = {
+            Plant: oModelMonitor.oData.Plant,
+            Romaneio: oModelMonitor.oData.Romaneio,
+            Edcnumber: oModelMonitor.oData.EdcNum,
+            Discharge: discharge,
+            Fiscalyear: currentYear.toString(),
+            Balance: (balanceInput - discharge).toString(),
+            Dischargestatus: "BAIXA MANUAL",
+            Createdon: new Date(),
+            Operation: "1",
+          };
 
-        oModel.create("/DischargeQtySet", payload, {
-          success: function (oData, oResponse) {
-            if (oResponse.statusCode == "201") {
-              var msg = this.getOwnerComponent()
-                .getModel("i18n")
-                .getResourceBundle()
-                .getText("discharged");
-              debugger;
-              // MessageBox.success(msg);
+          oModel.create("/DischargeQtySet", payload, {
+            success: function (oData, oResponse) {
+              if (oResponse.statusCode == "201") {
+                var msg = this.getOwnerComponent()
+                  .getModel("i18n")
+                  .getResourceBundle()
+                  .getText("discharged");
 
-              logSmartTable.rebindTable();
+                logSmartTable.rebindTable();
+                MessageToast.show(msg);
+                oModelMonitor.setData(null);
+                this.handleCancelBtnPress();
+                oModelMonitor.refresh(true);
+              }
+            }.bind(this),
+
+            error: function (oError) {
+              var oSapMessage = JSON.parse(oError.responseText);
+              var msg = oSapMessage.error.message.value;
+              // MessageBox.error(msg);
               MessageToast.show(msg);
-              oModelMonitor.setData(null);
-              this.handleCancelBtnPress();
-              oModelMonitor.refresh(true);
-            }
-          }.bind(this),
-
-          error: function (oError) {
-            var oSapMessage = JSON.parse(oError.responseText);
-            var msg = oSapMessage.error.message.value;
-            // MessageBox.error(msg);
-            MessageToast.show(msg);
-          },
-        });
-      } else {
-        MessageToast.show("Preencha os campos obrigatórios");
-      }
+            },
+          });
+        } else {
+          MessageToast.show("Preencha os campos obrigatórios");
+        }
       },
 
       handleCancelBtnPress: function () {
         this.byId("openDialog").close();
         // var modelMonitor = this.getView().getModel("Monitor");
-        this.byId("dischargeInput").mProperties.value = "";
-        this.byId("balanceInput").mProperties.value = "";
+        this.byId("dischargeInput").setValue = "";
+        this.byId("balanceInput").setValue = "";
 
         var modelMonitor = this.getOwnerComponent().getModel("Monitor");
         modelMonitor.setData(null);
@@ -400,8 +398,11 @@ sap.ui.define(
         }
       },
 
-      onDischargeDelete: function () {
-        let oSmartTable1 = this.getView().byId("st_log");
+      onDischarge: function (oEvent) {
+        let oSmartTable1 = sap.ui
+          .getCore()
+          .byId("container-royalties.zroyalties---list--st_monitor");
+        // let oSmartTable1 = this.getView().byId("st_monitor");
         let oSmartTable = oSmartTable1.getTable();
         var SmartTableLine = oSmartTable._aSelectedPaths;
         if (SmartTableLine.length < 1) {
@@ -417,46 +418,115 @@ sap.ui.define(
             .getProperty(SmartTableLine.toString());
 
           var oView = this.getView();
-          var oModelLog = oView.getModel("Discharge");
-          oModelLog.setData(SelectedItem);
+          var modelMonitor = oView.getModel("Monitor");
+          modelMonitor.setData(SelectedItem);
+          var monitorModel = this.getOwnerComponent().getModel("Monitor");
 
-          var oModel = this.getView().getModel();
+          var actualBalance = parseInt(
+            monitorModel.getData().ApplicationQuantity
+          );
+          monitorModel.setProperty("/Balance", this.getBalance(actualBalance));
+          if (!this.byId("openDialog")) {
+            Fragment.load({
+              id: oView.getId(),
+              name: "royalties.zroyalties.view.fragments.Discharge",
+              controller: this,
+            }).then(function (oDialog) {
+              oView.addDependent(oDialog);
+              oDialog.open();
+            });
+          } else {
+            this.byId("openDialog").open();
+          }
+        }
+      },
 
-          var payload = {
-            Plant: oModelLog.getData().Plant,
-            Romaneio: oModelLog.getData().Romaneio,
-            Edcnumber: oModelLog.getData().EdcNumber,
-            Discharge: oModelLog.getData().Discharge,
-            Fiscalyear: oModelLog.getData().FiscalYear,
-            Createdon: new Date(oModelLog.getData().CreatedOn),
-            Balance: oModelLog.getData().Balance,
-            Dischargestatus: "BAIXA MANUAL",
-            Operation: "2",
-          };
+      onDischargeDelete: function () {
+        let oSmartTable1 = sap.ui
+          .getCore()
+          .byId("container-royalties.zroyalties---list--st_monitor");
+        // let oSmartTable1 = this.getView().byId("st_monitor");
+        let oSmartTable = oSmartTable1.getTable();
+        var SmartTableLine = oSmartTable._aSelectedPaths;
+        if (SmartTableLine.length < 1) {
+          MessageToast.show(
+            this.getOwnerComponent()
+              .getModel("i18n")
+              .getResourceBundle()
+              .getText("nullRegisterNotAllowed")
+          );
+        } else {
+          var SelectedHeader = oSmartTable
+            .getModel()
+            .getProperty(SmartTableLine.toString());
 
-          oModel.create("/DischargeQtySet", payload, {
-            success: function (oData, oResponse) {
-              if (oResponse.statusCode == "201") {
-                var msg = this.getOwnerComponent()
-                  .getModel("i18n")
-                  .getResourceBundle()
-                  .getText("dischargeDeleted");
-                oSmartTable1.rebindTable();
-                // MessageBox.success(msg);
-                MessageToast.show(msg);
-                oModelLog.setData(null);
-                //this.handleCancelBtnPress();
-                // this.model().refresh(true);
+          var oView = this.getView();
+          var modelMonitor = oView.getModel("Monitor");
+          modelMonitor.setData(SelectedHeader);
+          var monitorModel = this.getOwnerComponent().getModel("Monitor");
+
+          let oSmartTableLog = this.getView().byId("st_log");
+          let oSmartTable2 = oSmartTableLog.getTable();
+          var SmartTableLogLine = oSmartTable2._aSelectedPaths;
+          if (SmartTableLogLine.length < 1) {
+            MessageToast.show(
+              this.getOwnerComponent()
+                .getModel("i18n")
+                .getResourceBundle()
+                .getText("nullRegisterNotAllowed")
+            );
+          } else {
+            var SelectedItem = oSmartTableLog
+              .getModel()
+              .getProperty(SmartTableLogLine.toString());
+
+            var oModelLog = oView.getModel("Discharge");
+            oModelLog.setData(SelectedItem);
+            var oModel = this.getView().getModel();
+
+            var payload = {
+              Plant: monitorModel.getData().Plant,
+              Romaneio: monitorModel.getData().Romaneio,
+              Edcnumber: oModelLog.getData().EdcNumber,
+              Discharge: oModelLog.getData().Discharge,
+              Fiscalyear: oModelLog.getData().FiscalYear,
+              Createdon: new Date(oModelLog.getData().CreatedOn),
+              Balance: oModelLog.getData().Balance,
+              Dischargestatus: "BAIXA MANUAL",
+              Operation: "2",
+            };
+
+            oModel.create(
+              "/DischargeQtySet",
+              payload,
+              {
+                success: function (oData, oResponse) {
+                  if (oResponse.statusCode == "201") {
+                    var msg = this.getOwnerComponent()
+                      .getModel("i18n")
+                      .getResourceBundle()
+                      .getText("dischargeDeleted");
+                    oSmartTable1.rebindTable();
+                    // MessageBox.success(msg);
+                    MessageToast.show(msg);
+                    oModelLog.setData(null);
+                    oSmartTableLog.rebindTable();
+                    MessageToast.show(msg);
+                    monitorModel.setData(null);
+                    this.handleCancelBtnPress();
+                    monitorModel.refresh(true);
+                  }
+                }.bind(this),
+
+                error: function (oError) {
+                  var oSapMessage = JSON.parse(oError.responseText);
+                  var msg = oSapMessage.error.message.value;
+                  // MessageBox.error(msg);
+                  MessageToast.show(msg);
+                },
               }
-            }.bind(this),
-
-            error: function (oError) {
-              var oSapMessage = JSON.parse(oError.responseText);
-              var msg = oSapMessage.error.message.value;
-              // MessageBox.error(msg);
-              MessageToast.show(msg);
-            },
-          });
+            );
+          }
         }
       },
     });
