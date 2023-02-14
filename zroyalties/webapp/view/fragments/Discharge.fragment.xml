@@ -48,6 +48,7 @@
 					<Input 
 						placeholder="{i18n>TypeDischargeAmount}"
 						id="dischargeInput"
+						required="true"
 					/>
 			</f:content>
 		</f:SimpleForm>

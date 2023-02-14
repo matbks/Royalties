@@ -74,8 +74,10 @@ sap.ui.define(
         var oModelMonitor = this.getOwnerComponent().getModel("Monitor");
         var oModel = this.getView().getModel();
         var discharge = this.byId("dischargeInput").mProperties.value;
-        var balanceInput = Math.floor(this.byId("balanceInput").mProperties.value);
-    
+        var balanceInput = Math.floor(
+          this.byId("balanceInput").mProperties.value
+        );
+
         var d = new Date();
         var currentYear = d.getFullYear();
         debugger;
@@ -298,16 +300,13 @@ sap.ui.define(
           .getTable()
           .removeSelections();
 
-          this.getRouter().navTo("list");
+        this.getRouter().navTo("list");
       },
 
       onDischarge: function (oEvent) {
-         
         let oSmartTable1 = sap.ui
           .getCore()
-          .byId(
-            "container-royalties.zroyalties---list--st_monitor"
-          );
+          .byId("container-royalties.zroyalties---list--st_monitor");
         // let oSmartTable1 = this.getView().byId("st_monitor");
         let oSmartTable = oSmartTable1.getTable();
         var SmartTableLine = oSmartTable._aSelectedPaths;
@@ -324,13 +323,14 @@ sap.ui.define(
             .getProperty(SmartTableLine.toString());
 
           var oView = this.getView();
-           var modelMonitor = oView.getModel("Monitor");
-           modelMonitor.setData(SelectedItem);
-          var monitorModel = this.getOwnerComponent().getModel("Monitor")
-          
-          var actualBalance = parseInt(monitorModel.getData().ApplicationQuantity);  
-          monitorModel.setProperty("/Balance", this.getBalance(actualBalance) );
-          debugger;   
+          var modelMonitor = oView.getModel("Monitor");
+          modelMonitor.setData(SelectedItem);
+          var monitorModel = this.getOwnerComponent().getModel("Monitor");
+
+          var actualBalance = parseInt(
+            monitorModel.getData().ApplicationQuantity
+          );
+          monitorModel.setProperty("/Balance", this.getBalance(actualBalance));
           if (!this.byId("openDialog")) {
             Fragment.load({
               id: oView.getId(),
@@ -343,25 +343,27 @@ sap.ui.define(
           } else {
             this.byId("openDialog").open();
           }
- 
         }
       },
 
-      getBalance: function(actualBalance){
-        var balance = 0.00;
-        let oSmartTableLogs = this.getView().byId("st_log");  
+      getBalance: function (actualBalance) {
+        var balance = 0.0;
+        let oSmartTableLogs = this.getView().byId("st_log");
         var items_length = oSmartTableLogs.getTable().getItems().length;
         debugger;
-        for ( var i = 0; i < items_length ; i++){
-          var row = oSmartTableLogs.getTable().getItems()[i].getBindingContext().getObject()
-          if ( !row.Discharge.includes(',') && !row.Discharge == "" )
-          {
-          row.Discharge = row.Discharge;
-          balance = balance + parseInt(row.Discharge);
+        for (var i = 0; i < items_length; i++) {
+          var row = oSmartTableLogs
+            .getTable()
+            .getItems()
+            [i].getBindingContext()
+            .getObject();
+          if (!row.Discharge.includes(",") && !row.Discharge == "") {
+            row.Discharge = row.Discharge;
+            balance = balance + parseInt(row.Discharge);
           }
         }
-        var sum = actualBalance - balance
-        return ( (sum >= 0) ? sum : '0,00' ).toFixed(2).toString();
+        var sum = actualBalance - balance;
+        return (sum >= 0 ? sum : "0").toFixed(2).toString();
       },
 
       /**
@@ -406,7 +408,9 @@ sap.ui.define(
               .getText("nullRegisterNotAllowed")
           );
         } else {
-          var SelectedItem = oSmartTable.getModel().getProperty(SmartTableLine.toString());
+          var SelectedItem = oSmartTable
+            .getModel()
+            .getProperty(SmartTableLine.toString());
 
           var oView = this.getView();
           var oModelLog = oView.getModel("Discharge");
