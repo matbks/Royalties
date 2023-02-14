@@ -88,7 +88,7 @@ sap.ui.define(
           Edcnumber: oModelMonitor.oData.EdcNum,
           Discharge: discharge,
           Fiscalyear: currentYear.toString(),
-          Balance: balanceInput.toString(),
+          Balance: (balanceInput - discharge).toString(),
           Dischargestatus: "BAIXA MANUAL",
           Createdon: new Date(),
           Operation: "1",
