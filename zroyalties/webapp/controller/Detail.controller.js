@@ -74,8 +74,8 @@ sap.ui.define(
         var oModelMonitor = this.getOwnerComponent().getModel("Monitor");
         var oModel = this.getView().getModel();
         var discharge = this.byId("dischargeInput").mProperties.value;
-        var balanceInput = this.byId("balanceInput").mProperties.value;
-
+        var balanceInput = Math.floor(this.byId("balanceInput").mProperties.value);
+    
         var d = new Date();
         var currentYear = d.getFullYear();
         debugger;
@@ -324,8 +324,8 @@ sap.ui.define(
             .getProperty(SmartTableLine.toString());
 
           var oView = this.getView();
-          // var modelMonitor = oView.getModel("Monitor");
-          // modelMonitor.setData(SelectedItem);
+           var modelMonitor = oView.getModel("Monitor");
+           modelMonitor.setData(SelectedItem);
           var monitorModel = this.getOwnerComponent().getModel("Monitor")
           
           var actualBalance = parseInt(monitorModel.getData().ApplicationQuantity);  
