@@ -39,14 +39,15 @@ sap.ui.define(
        * @public
        */
       onInit: function () {
+        this.getView().addEventDelegate(
+          {
+            onAfterShow: function (oEvent) {  
+              this.byId("st_monitor").getTable().removeSelections();
+            }.bind(this),
+          },
+          this.getView()
+        );
 
-       this.getView().addEventDelegate({
-          onAfterShow: function (oEvent) { 
-            debugger;
-            this.byId("st_monitor").getTable().removeSelections();
-          }.bind(this)
-        }, this.getView());
- 
         // Control state model
         var oList = this.byId("list"),
           oViewModel = this._createViewModel(),
@@ -81,6 +82,10 @@ sap.ui.define(
           .getRoute("list")
           .attachPatternMatched(this._onMasterMatched, this);
         this.getRouter().attachBypassed(this.onBypassed, this);
+
+        var stMonitor = this.byId("st_monitor").getId();
+        var oModelUtils = this.getOwnerComponent().getModel("Utils");
+        oModelUtils.setProperty("/stMonitor", stMonitor);
       },
 
       /* =========================================================== */
@@ -209,14 +214,13 @@ sap.ui.define(
        * @public
        */
       onSelectionChange: function (oEvent) {
-
         let oSmartTable1 = this.getView().byId("st_monitor");
         let oSmartTable = oSmartTable1.getTable();
-        var SmartTableLine = oSmartTable._aSelectedPaths;       
-          var SelectedItem = oSmartTable
-            .getModel()
-            .getProperty(SmartTableLine.toString());
-        var  oModelMonitor = this.getView().getModel("Monitor"); 
+        var SmartTableLine = oSmartTable._aSelectedPaths;
+        var SelectedItem = oSmartTable
+          .getModel()
+          .getProperty(SmartTableLine.toString());
+        var oModelMonitor = this.getView().getModel("Monitor");
         oModelMonitor.setData(SelectedItem);
         var oList = oEvent.getSource(),
           bSelected = oEvent.getParameter("selected");
@@ -296,13 +300,13 @@ sap.ui.define(
 
       handleSaveBtnPress: function (oEvent) {
         var oModelMonitor = this.getView().getModel("Monitor");
-        var oModel = this.getView().getModel(); 
+        var oModel = this.getView().getModel();
         var results = oModelMonitor.getData();
         var discharge = this.byId("dischargeInput").mProperties.value;
         var balanceInput = this.byId("balanceInput").mProperties.value;
 
         var d = new Date();
-        var currentYear = d.getFullYear(); 
+        var currentYear = d.getFullYear();
         debugger;
 
         var payload = {
@@ -312,11 +316,11 @@ sap.ui.define(
           Discharge: discharge,
           Fiscalyear: currentYear.toString(),
           Balance: balanceInput,
-          Dischargestatus: "BAIXA MANUAL", 
-          Createdon: new Date(),  
-          Operation: '1',
-        }
- 
+          Dischargestatus: "BAIXA MANUAL",
+          Createdon: new Date(),
+          Operation: "1",
+        };
+
         oModel.create("/DischargeQtySet", payload, {
           success: function (oData, oResponse) {
             if (oResponse.statusCode == "201") {
@@ -324,7 +328,7 @@ sap.ui.define(
                 .getModel("i18n")
                 .getResourceBundle()
                 .getText("discharged");
-                debugger;
+              debugger;
               // MessageBox.success(msg);
               MessageToast.show(msg);
               this.clearModel(oModelMonitor);

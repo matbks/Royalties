@@ -62,5 +62,13 @@ sap.ui.define(
         
         return oModel;
     },
+
+    createUtilsModel: function () {
+      var oModel = new JSONModel({ 
+          stMonitor: '',          
+      });
+      
+      return oModel;
+  },
 };
 });

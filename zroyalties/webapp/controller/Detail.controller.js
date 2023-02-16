@@ -74,7 +74,17 @@ sap.ui.define(
         var oModelMonitor = this.getOwnerComponent().getModel("Monitor");
         var oModel = this.getView().getModel();
         var discharge = this.byId("dischargeInput").mProperties.value;
-        if (discharge) {  
+        if (discharge) {
+          
+          var regExp = /[a-zA-Z]/g; 
+                      
+          if(regExp.test(discharge)){
+            MessageToast.show("Este campo não pode conter letras"); 
+          } 
+          else {
+             
+          
+           
           
           var balanceInput = Math.floor(
             this.byId("balanceInput").mProperties.value
@@ -102,7 +112,7 @@ sap.ui.define(
             Edcnumber: oModelMonitor.oData.EdcNum,
             Discharge: discharge.toString(),
             Fiscalyear: currentYear.toString(),
-            Balance: (balanceInput - discharge).toString(),
+            Balance: (balanceInput - parseFloat(discharge) ).toString(),
             Dischargestatus: "BAIXA MANUAL",
             Createdon: new Date(),
             Operation: "1",
@@ -129,9 +139,13 @@ sap.ui.define(
               MessageToast.show(msg);
             },
           });
-        }}} else {
+        }}
+      
+        }
+      } else {
           MessageToast.show("Preencha os campos obrigatórios");
         }
+      
       },
 
       handleCancelBtnPress: function () {
@@ -319,9 +333,11 @@ sap.ui.define(
       },
 
       onDischarge: function (oEvent) {
+        var oUtilsModel = this.getOwnerComponent().getModel("Utils");
+        var oSmartTable1Id = oUtilsModel.getProperty("/stMonitor")
         let oSmartTable1 = sap.ui
           .getCore()
-          .byId("container-royalties.zroyalties---list--st_monitor");
+          .byId(oSmartTable1Id); 
         // let oSmartTable1 = this.getView().byId("st_monitor");
         let oSmartTable = oSmartTable1.getTable();
         var SmartTableLine = oSmartTable._aSelectedPaths;
@@ -343,7 +359,7 @@ sap.ui.define(
           modelMonitor.setData(SelectedItem);
           var monitorModel = this.getOwnerComponent().getModel("Monitor");
 
-          var actualBalance = parseInt(
+          var actualBalance = parseFloat(
             monitorModel.getData().ApplicationQuantity
           );
           monitorModel.setProperty("/Balance", this.getBalance(actualBalance));
@@ -376,7 +392,7 @@ sap.ui.define(
             .getObject();
           if (!row.Discharge.includes(",") && !row.Discharge == "") {
             row.Discharge = row.Discharge;
-            balance = balance + parseInt(row.Discharge);
+            balance = balance + parseFloat(row.Discharge);
           }
         }
         var sum = actualBalance - balance;
@@ -414,10 +430,12 @@ sap.ui.define(
       }, 
 
       onDischargeDelete: function () {
+
+        var oUtilsModel = this.getOwnerComponent().getModel("Utils");
+        var oSmartTable1Id = oUtilsModel.getProperty("/stMonitor")
         let oSmartTable1 = sap.ui
           .getCore()
-          .byId("container-royalties.zroyalties---list--st_monitor");
-
+          .byId(oSmartTable1Id);  
         let oSmartTable = oSmartTable1.getTable();
         var SmartTableLine = oSmartTable._aSelectedPaths;
 
@@ -456,7 +474,8 @@ sap.ui.define(
             var oModelLog = oView.getModel("Discharge");
             oModelLog.setData(SelectedItem);
             var oModel = this.getView().getModel();
-
+            var Balance = '0.00'
+            Balance = (oModelLog.getData().Balance).toString()
             var payload = {
               Plant: oModelMonitor.getData().Plant,
               Romaneio: oModelMonitor.getData().Romaneio,
@@ -464,7 +483,7 @@ sap.ui.define(
               Discharge: oModelLog.getData().Discharge,
               Fiscalyear: oModelLog.getData().FiscalYear,
               Createdon: new Date(oModelLog.getData().CreatedOn),
-              Balance: oModelLog.getData().Balance,
+              Balance: Balance,
               Dischargestatus: "BAIXA MANUAL",
               Operation: "2",
             };
