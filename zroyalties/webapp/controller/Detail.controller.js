@@ -86,9 +86,10 @@ sap.ui.define(
           
            
           
-          var balanceInput = Math.floor(
-            this.byId("balanceInput").mProperties.value
-          );
+          // var balanceInput = Math.floor(
+          //   this.byId("balanceInput").mProperties.value
+          // );
+          var balanceInput = this.byId("balanceInput").mProperties.value;
           if ( discharge > balanceInput )
           {
             MessageToast.show("Insira uma baixa de valor inferior ao saldo"); 
