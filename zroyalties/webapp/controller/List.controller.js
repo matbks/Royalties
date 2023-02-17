@@ -83,9 +83,10 @@ sap.ui.define(
           .attachPatternMatched(this._onMasterMatched, this);
         this.getRouter().attachBypassed(this.onBypassed, this);
 
-        var stMonitor = this.byId("st_monitor").getId();
-        var oModelUtils = this.getOwnerComponent().getModel("SmartTables");
-        oModelUtils.setProperty("/st_monitor", stMonitor);
+        // var stMonitor = this.byId("st_monitor").getId();
+        // var oModelUtils = this.getOwnerComponent().getModel("SmartTables");
+        // oModelUtils.setProperty("/st_monitor", stMonitor);
+        this.setSmartTable("st_monitor");
       },
 
       /* =========================================================== */
