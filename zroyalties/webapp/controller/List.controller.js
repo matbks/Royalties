@@ -84,8 +84,8 @@ sap.ui.define(
         this.getRouter().attachBypassed(this.onBypassed, this);
 
         var stMonitor = this.byId("st_monitor").getId();
-        var oModelUtils = this.getOwnerComponent().getModel("Utils");
-        oModelUtils.setProperty("/stMonitor", stMonitor);
+        var oModelUtils = this.getOwnerComponent().getModel("SmartTables");
+        oModelUtils.setProperty("/st_monitor", stMonitor);
       },
 
       /* =========================================================== */

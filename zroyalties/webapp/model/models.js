@@ -47,28 +47,29 @@ sap.ui.define(
 
       createDischargeModel: function () {
         var oModel = new JSONModel({
-            Plant: '',
-            Romaneio: '',
-            Edcnumber: '',
-            Creationtime: '',
-            Discharge: '',
-            Fiscalyear: '',
-            ApplicationQuantity: '',
-            Creationdate: '',
-            Creationdate: '',
-            Dischargestatus: '',  
-            Balance: '',          
+          Plant: "",
+          Romaneio: "",
+          Edcnumber: "",
+          Creationtime: "",
+          Discharge: "",
+          Fiscalyear: "",
+          ApplicationQuantity: "",
+          Creationdate: "",
+          Creationdate: "",
+          Dischargestatus: "",
+          Balance: "",
         });
-        
-        return oModel;
-    },
 
-    createUtilsModel: function () {
-      var oModel = new JSONModel({ 
-          stMonitor: '',          
-      });
-      
-      return oModel;
-  },
-};
-});
+        return oModel;
+      },
+
+      createSmartTablesModel: function () {
+        var oModel = new JSONModel({
+          st_monitor: "", 
+        });
+
+        return oModel;
+      },
+    };
+  }
+);

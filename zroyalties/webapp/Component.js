@@ -30,7 +30,7 @@ sap.ui.define([
 
             this.setModel(models.createDischargeModel(), "Discharge");    
 
-            this.setModel(models.createUtilsModel(), "Utils");   
+            this.setModel(models.createSmartTablesModel(), "SmartTables");   
 
             // call the base component's init function and create the App view
             UIComponent.prototype.init.apply(this, arguments);

@@ -35,6 +35,14 @@ sap.ui.define([
             return this.getView().setModel(oModel, sName);
         },
 
+        getSmartTable: function (smartTableId, model = "SmartTables") {
+            debugger;
+            var oSmartTableModel = this.getOwnerComponent().getModel(model); 
+            var oSmartTableId = oSmartTableModel.getProperty( "/" + smartTableId);
+            var oSmartTable = sap.ui.getCore().byId(oSmartTableId);
+            return oSmartTable;
+          },
+
         /**
          * Convenience method for getting the resource bundle.
          * @public
