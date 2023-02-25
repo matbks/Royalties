@@ -9,8 +9,9 @@ sap.ui.define([
 
     return UIComponent.extend("royalties.zroyalties.Component", {
 
-        metadata : {
-            manifest : "json"
+        metadata: {
+            manifest: "json",
+            config:  { "fullWidth": true }
         },
 
         /**
