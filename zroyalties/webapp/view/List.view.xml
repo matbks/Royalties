@@ -77,6 +77,7 @@
 					/>
 				</smartFilterBar:controlConfiguration>
 			</smartFilterBar:SmartFilterBar>
+			
 			<smartTable:SmartTable
 				id="st_monitor"
 				
@@ -110,15 +111,15 @@
 					selectionChange=".onSelectionChange"
 				/>
 				<smartTable:customToolbar>
-					<!-- <OverflowToolbar design="Transparent">
+					<OverflowToolbar design="Transparent">
 						<ToolbarSpacer/>
 						<OverflowToolbarButton
-							icon="sap-icon://arrow-bottom"
+							icon="sap-icon://drill-down"
 							text="{i18n>discharge}" 
 							tooltip="{i18n>discharge}"
-							press="onDischarge" 
+							press="onMassDischarge" 
 						/>
-					</OverflowToolbar> -->
+					</OverflowToolbar>
 				</smartTable:customToolbar>
 
 			</smartTable:SmartTable>

@@ -49,6 +49,8 @@ sap.ui.define(
           .getModel()
           .metadataLoaded()
           .then(this._onMetadataLoaded.bind(this));
+
+          this.setSmartTable("st_log");
       },
 
       /* =========================================================== */

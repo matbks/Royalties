@@ -11,6 +11,7 @@ sap.ui.define(
     "../model/formatter",
     "sap/m/MessageToast",
     "sap/ui/vk/Material",
+    "./RedwareTools/ValueHelp/ValueHelp",
   ],
   function (
     BaseController,
@@ -23,7 +24,8 @@ sap.ui.define(
     Fragment,
     formatter,
     MessageToast,
-    Material
+    Material,
+    ValueHelp,
   ) {
     "use strict";
 
@@ -41,7 +43,7 @@ sap.ui.define(
       onInit: function () {
         this.getView().addEventDelegate(
           {
-            onAfterShow: function (oEvent) {  
+            onAfterShow: function (oEvent) {
               this.byId("st_monitor").getTable().removeSelections();
             }.bind(this),
           },
@@ -259,6 +261,76 @@ sap.ui.define(
         });
       },
 
+      onMassDischarge: function (oEvent) {
+        var oView = this.getView();
+
+        if (!this.byId("openDialog")) {
+          Fragment.load({
+            id: oView.getId(),
+            name: "royalties.zroyalties.view.fragments.MassDischarge",
+            controller: this,
+          }).then(function (oDialog) {
+            oView.addDependent(oDialog);
+            oDialog.open();
+          });
+        } else {
+          this.byId("openDialog").open();
+        }
+      },
+
+      handleCancelMassDischarge: function () {
+        this.byId("Contract").mProperties.value = "";
+        this.byId("Partner").mProperties.value = "";
+        this.byId("Quantity").mProperties.value = "";
+        this.byId("openDialog").destroy();
+      },
+
+      handleSaveMassDischarge: function () {
+        debugger;
+        var oModel = this.getView().getModel();
+        var oSmartTable = this.getView().byId("st_monitor")
+
+        var MassDischargeData = [
+          {
+            Contract: this.byId("Contract").mProperties.value,
+            Partner: this.byId("Partner").mProperties.value,
+            Quantity: this.byId("Quantity").mProperties.value,
+          },
+        ];
+
+        var payload = { 
+          Action: "MASSDISCHARGE",
+          Payload: JSON.stringify(MassDischargeData),
+        };
+
+        oModel.create("/JsonCommSet", payload, {
+          success: function (oData, oResponse) {
+            if (oResponse.statusCode == "201") {
+              var msg = this.getOwnerComponent()
+                .getModel("i18n")
+                .getResourceBundle()
+                .getText("discharged");
+              debugger;
+              // MessageBox.success(msg);
+              MessageToast.show(msg);
+              oSmartTable.rebindTable();
+
+              let oSmartTableDetail = this.getSmartTable("st_log");
+              oSmartTableDetail.rebindTable();
+
+              this.handleCancelMassDischarge();
+            }
+          }.bind(this),
+
+          error: function (oError) {
+            var oSapMessage = JSON.parse(oError.responseText);
+            var msg = oSapMessage.error.message.value;
+            // MessageBox.error(msg);
+            MessageToast.show(msg);
+          },
+        });
+      },
+
       onDischarge: function (oEvent) {
         let oSmartTable1 = this.getView().byId("st_monitor");
         let oSmartTable = oSmartTable1.getTable();
@@ -386,6 +458,32 @@ sap.ui.define(
         // eslint-disable-next-line sap-no-history-manipulation
         history.go(-1);
       },
+
+      onPartnerF4: function(oEvent){
+        let oSelectDialog = ValueHelp.createSearchHelp(
+          this.getView(),
+          "Parceiro",
+          "/ZADOC_CREDIT_BLOCK_BP_F4",
+          "BusinessPartner",
+          "BusinessPartnerName",
+          oEvent.getSource()
+    );
+    oSelectDialog.open();
+  },
+ 
+      onContractF4: function (oEvent) {
+        let oSelectDialog = ValueHelp.createSearchHelp(
+          this.getView(),
+          "Contrato",
+          "/ZADOC_COMERCIAL_CONTRACT",
+          "Tkonn",
+          "Incoterms2Mm",
+          oEvent.getSource(),          
+        );
+        
+        oSelectDialog.open();
+      },
+
 
       /* =========================================================== */
       /* begin: internal methods                                     */

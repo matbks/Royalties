@@ -66,6 +66,7 @@ sap.ui.define(
       createSmartTablesModel: function () {
         var oModel = new JSONModel({
           st_monitor: "", 
+          st_log: "", 
         });
 
         return oModel;
