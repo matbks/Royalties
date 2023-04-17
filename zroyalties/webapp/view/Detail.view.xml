@@ -56,7 +56,7 @@
 				persistencyKey="SmartTableAnalytical_Explored"
 				class="sapUiResponsiveContentPadding"
 				app:useSmartToggle="true"
-				initiallyVisibleFields="Discharge,CreatedOn,FiscalYear,Balance,DischargeStatus"
+				initiallyVisibleFields="Discharge,CreatedOn,FiscalYear,DischargeStatus"
 				enableAutoBinding="true"
 				showFullScreenButton="false"
 				tableBindingPath="to_RoyaltiesLog"

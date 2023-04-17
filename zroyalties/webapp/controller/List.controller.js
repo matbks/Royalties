@@ -444,6 +444,7 @@ sap.ui.define(
           TicketDate: "",
           Partner: "",
           PartnerId: "",
+          PropertyDescription: "",
           PartnerDescription: "",
           Safra: "",
           Plant: "",
@@ -463,9 +464,9 @@ sap.ui.define(
         let oSelectDialog = ValueHelp.createSearchHelp(
           this.getView(),
           "Parceiro",
-          "/ZADOC_CREDIT_BLOCK_BP_F4",
-          "BusinessPartner",
-          "BusinessPartnerName",
+          "/ZADOC_ROYALTIES_PARTNERS",
+          "Partner",
+          "PartnerDescription",
           oEvent.getSource()
     );
     oSelectDialog.open();
@@ -475,9 +476,9 @@ sap.ui.define(
         let oSelectDialog = ValueHelp.createSearchHelp(
           this.getView(),
           "Contrato",
-          "/ZADOC_COMERCIAL_CONTRACT",
-          "Tkonn",
-          "Incoterms2Mm",
+          "/ZADOC_ROYALTIES_CONTRACTS",
+          "Contract",
+          "ContractDescription",
           oEvent.getSource(),          
         );
         

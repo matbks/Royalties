@@ -22,14 +22,13 @@ sap.ui.define(
         entitySet, // entitySet que provém os dados do value hlep
         key, // chave value help ( valor que será utilizado, ex: código do BP )
         description, // descrição da chave do value help ( ex: Descrição do BP)
-        oSource, // oEvent.getSource() de onde o value help é chamado,       
+        oSource, // oEvent.getSource() de onde o value help é chamado,
         filterName,
         filterValue,
         filter2Name,
         filter2Value,
-        helpColumns, 
+        helpColumns
       ) {
-
         this.oSource = oSource;
         this.key = key;
         this.description = description;
@@ -43,24 +42,9 @@ sap.ui.define(
           cancel: this._onValueHelpClose.bind(this),
         });
 
-        // oSelectDialog.getBinding("items").attachEventOnce("updateFinished", function() {
-        //   this.oSearchField.focus()
-        // });
-
-        // oSelectDialog.onAfterRendering(): function() {
-        //   // this._focusSearchField();
-        //   setTimeout(function(){
-        //     var oSearchField = sap.ui.getCore().byId(oSelectDialog.getId() + "-searchField");
-        //     if (oSearchField) {
-        //       oSearchField.focus();
-        //     }
-        //   }, 0);
-        // }.bind(this)
-
         if (helpColumns) {
           helpColumns;
         } else {
-          debugger;
           // Criação do template do item do dialog
           var oItemTemplate = new StandardListItem({
             title: "{" + key + "}",
@@ -70,54 +54,43 @@ sap.ui.define(
 
         var aFilters = [];
 
-        if ( filterValue && filterName ){
-        // Create the filter object
-        var oFilter = new sap.ui.model.Filter(
-          filterName,
-          sap.ui.model.FilterOperator.EQ,
-          filterValue
-        );
-
-        aFilters.push(oFilter)
-
-        if ( filter2Value && filter2Name ){
-          var oFilter2 = new sap.ui.model.Filter(
-            filter2Name,
+        if (filterValue && filterName) {
+          // Create the filter object
+          var oFilter = new sap.ui.model.Filter(
+            filterName,
             sap.ui.model.FilterOperator.EQ,
-            filter2Value
+            filterValue
           );
 
-          aFilters.push(oFilter2)
+          aFilters.push(oFilter);
+
+          if (filter2Value && filter2Name) {
+            var oFilter2 = new sap.ui.model.Filter(
+              filter2Name,
+              sap.ui.model.FilterOperator.EQ,
+              filter2Value
+            );
+
+            aFilters.push(oFilter2);
+          }
+
+          // Bind the aggregation with the filter
+          oSelectDialog.bindAggregation("items", {
+            path: entitySet,
+            template: oItemTemplate,
+            filters: aFilters,
+          });
+        } else {
+          oSelectDialog.bindAggregation("items", entitySet, oItemTemplate);
         }
-
-        // Bind the aggregation with the filter
-        oSelectDialog.bindAggregation("items", {
-          path: entitySet,
-          template: oItemTemplate,
-          filters: aFilters,
-        });
-
-      } else {
-
-        oSelectDialog.bindAggregation("items", entitySet, oItemTemplate);
-
-      }
 
         // Definição da coleção de items do dialog
         // oSelectDialog.bindAggregation("items", entitySet, oItemTemplate);
 
         oParentView.addDependent(oSelectDialog);
 
-        // oSelectDialog._oSearchField.focus();
-
         return oSelectDialog;
       },
-
-      // _focusSearchField: function(oSearchField) {
-      //          if (oSearchField) {
-      //     oSearchField.focus();
-      //   }
-      // },
 
       _onValueHelpSearch: function (oEvent) {
         var sValue = oEvent.getParameter("value");
@@ -153,8 +126,8 @@ sap.ui.define(
           return;
         }
 
-        if(oSelectedItem.getTitle())
-        this.oSource.setValue(oSelectedItem.getTitle());
+        if (oSelectedItem.getTitle())
+          this.oSource.setValue(oSelectedItem.getTitle());
       },
     };
   }
