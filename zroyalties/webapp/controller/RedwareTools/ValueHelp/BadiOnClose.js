@@ -4,11 +4,18 @@ sap.ui.define(function () {
     run: function (oEvent, oSelectedItem, oParentView) {
       var oModel = oParentView.getModel();
       debugger;
-      var sBalancePath = "/ZADOC_ROYALTIES_BALANCE_SUM"; 
+      var Partner = oSelectedItem.mProperties.title;
+      if ( Partner.length() < 10 ){ 
+        var MissingLeadingZeros = Partner.length() - 10;
+        for (i = 0; i < MissingLeadingZeros; i++){
+          Partner = '0' + Partner; 
+        }
+      }
+      var sBalancePath = "/ZADOC_ROYALTIES_MONITOR"; 
       var oBalaceFilter = new sap.ui.model.Filter(
         "Partner",
         sap.ui.model.FilterOperator.EQ,
-        oSelectedItem.mProperties.title
+        Partner
       );
       var oBalanceInput = oEvent
       .getSource()
@@ -21,7 +28,7 @@ sap.ui.define(function () {
 
         success: function (oData, oResponse) { 
  
-          oBalanceInput = oData.results[1].Quantity; 
+          oBalanceInput.setValue(oData.results[1].Discharges); 
           
         }.bind(this),
 
