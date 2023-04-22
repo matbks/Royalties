@@ -28,7 +28,7 @@ sap.ui.define(function () {
 
         success: function (oData, oResponse) { 
  
-          oBalanceInput.setValue(oData.results[1].Balance); 
+          oBalanceInput.setValue(oData.results[0].Balance); 
           
         }.bind(this),
 
