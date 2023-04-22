@@ -7,7 +7,7 @@ sap.ui.define(function () {
       var Partner = oSelectedItem.mProperties.title;
       if ( Partner.length < 10 ){ 
         var MissingLeadingZeros = Partner.length - 10;
-        for (i = 0; i < MissingLeadingZeros; i++){
+        for (var i = 0; i < MissingLeadingZeros; i++){
           Partner = '0' + Partner; 
         }
       }
