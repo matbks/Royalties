@@ -2,6 +2,7 @@ sap.ui.define(function () {
   "use strict";
   return {
     run: function (oEvent, oSelectedItem, oParentView) {
+      var oModel = oParentView.getModel();
       debugger;
       var sBalancePath = "/ZADOC_ROYALTIES_BALANCE_SUM"; 
       var oBalaceFilter = new sap.ui.model.Filter(
