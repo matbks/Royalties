@@ -51,6 +51,12 @@
 					id="Quantity"
 					type="Number"
 				/>
+				<Label text="Saldo"/>
+				<Input
+					id="Balance"  
+					enabled="false"
+					value="teste"
+				/>
 			</f:content>
 		</f:SimpleForm>
 	</Dialog>
