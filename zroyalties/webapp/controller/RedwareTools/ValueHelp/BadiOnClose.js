@@ -5,8 +5,8 @@ sap.ui.define(function () {
       var oModel = oParentView.getModel();
       debugger;
       var Partner = oSelectedItem.mProperties.title;
-      if ( Partner.length() < 10 ){ 
-        var MissingLeadingZeros = Partner.length() - 10;
+      if ( Partner.length < 10 ){ 
+        var MissingLeadingZeros = Partner.length - 10;
         for (i = 0; i < MissingLeadingZeros; i++){
           Partner = '0' + Partner; 
         }
