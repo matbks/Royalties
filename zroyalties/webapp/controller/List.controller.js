@@ -25,7 +25,7 @@ sap.ui.define(
     formatter,
     MessageToast,
     Material,
-    ValueHelp,
+    ValueHelp
   ) {
     "use strict";
 
@@ -288,47 +288,61 @@ sap.ui.define(
       handleSaveMassDischarge: function () {
         debugger;
         var oModel = this.getView().getModel();
-        var oSmartTable = this.getView().byId("st_monitor")
+        var oSmartTable = this.getView().byId("st_monitor");
+        if (
+          (this.byId("Contract").mProperties.value != "" ||
+            this.byId("Partner").mProperties.value != "") &&
+          this.byId("Quantity").mProperties.value != ""
+        ) {
+          if (
+            parseFloat(this.byId("Quantity").mProperties.value) >
+            parseFloat(this.byId("Balance").mProperties.value)
+          ) { 
+            MessageToast.show("Selecione uma quantidade inferior ao total bloqueado");
+          } else {
+            var MassDischargeData = [
+              {
+                Contract: this.byId("Contract").mProperties.value,
+                Partner: this.byId("Partner").mProperties.value,
+                Quantity: this.byId("Quantity").mProperties.value,
+              },
+            ];
 
-        var MassDischargeData = [
-          {
-            Contract: this.byId("Contract").mProperties.value,
-            Partner: this.byId("Partner").mProperties.value,
-            Quantity: this.byId("Quantity").mProperties.value,
-          },
-        ];
+            var payload = {
+              Action: "MASSDISCHARGE",
+              Payload: JSON.stringify(MassDischargeData),
+            };
 
-        var payload = { 
-          Action: "MASSDISCHARGE",
-          Payload: JSON.stringify(MassDischargeData),
-        };
+            oModel.create("/JsonCommSet", payload, {
+              success: function (oData, oResponse) {
+                if (oResponse.statusCode == "201") {
+                  var msg = this.getOwnerComponent()
+                    .getModel("i18n")
+                    .getResourceBundle()
+                    .getText("discharged");
+                  debugger;
+                  // MessageBox.success(msg);
+                  MessageToast.show(msg);
+                  oSmartTable.rebindTable();
 
-        oModel.create("/JsonCommSet", payload, {
-          success: function (oData, oResponse) {
-            if (oResponse.statusCode == "201") {
-              var msg = this.getOwnerComponent()
-                .getModel("i18n")
-                .getResourceBundle()
-                .getText("discharged");
-              debugger;
-              // MessageBox.success(msg);
-              MessageToast.show(msg);
-              oSmartTable.rebindTable();
+                  let oSmartTableDetail = this.getSmartTable("st_log");
+                  oSmartTableDetail.rebindTable();
 
-              let oSmartTableDetail = this.getSmartTable("st_log");
-              oSmartTableDetail.rebindTable();
+                  this.handleCancelMassDischarge();
+                }
+              }.bind(this),
 
-              this.handleCancelMassDischarge();
-            }
-          }.bind(this),
-
-          error: function (oError) {
-            var oSapMessage = JSON.parse(oError.responseText);
-            var msg = oSapMessage.error.message.value;
-            // MessageBox.error(msg);
-            MessageToast.show(msg);
-          },
-        });
+              error: function (oError) {
+                var oSapMessage = JSON.parse(oError.responseText);
+                var msg = oSapMessage.error.message.value;
+                // MessageBox.error(msg);
+                MessageToast.show(msg);
+              },
+            });
+          }
+        } else {
+          MessageToast.show("Preencha o campo contrato ou parceiro");
+        }
       },
 
       onDischarge: function (oEvent) {
@@ -460,7 +474,7 @@ sap.ui.define(
         history.go(-1);
       },
 
-      onPartnerF4: function(oEvent){
+      onPartnerF4: function (oEvent) {
         let oSelectDialog = ValueHelp.createSearchHelp(
           this.getView(),
           "Parceiro",
@@ -468,10 +482,10 @@ sap.ui.define(
           "Partner",
           "PartnerDescription",
           oEvent.getSource()
-    );
-    oSelectDialog.open();
-  },
- 
+        );
+        oSelectDialog.open();
+      },
+
       onContractF4: function (oEvent) {
         let oSelectDialog = ValueHelp.createSearchHelp(
           this.getView(),
@@ -479,12 +493,11 @@ sap.ui.define(
           "/ZADOC_ROYALTIES_CONTRACTS",
           "Contract",
           "ContractDescription",
-          oEvent.getSource(),          
+          oEvent.getSource()
         );
-        
+
         oSelectDialog.open();
       },
-
 
       /* =========================================================== */
       /* begin: internal methods                                     */

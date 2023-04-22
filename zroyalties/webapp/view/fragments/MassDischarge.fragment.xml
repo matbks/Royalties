@@ -55,7 +55,7 @@
 				<Input
 					id="Balance"  
 					enabled="false"
-					value="teste"
+					value="0.00"
 				/>
 			</f:content>
 		</f:SimpleForm>
