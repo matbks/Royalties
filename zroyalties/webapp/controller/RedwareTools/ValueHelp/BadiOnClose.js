@@ -6,12 +6,12 @@ sap.ui.define(function () {
       debugger;
       var Partner = oSelectedItem.mProperties.title;
       if ( Partner.length < 10 ){ 
-        var MissingLeadingZeros = Partner.length - 10;
+        var MissingLeadingZeros = 10 - Partner.length;
         for (var i = 0; i < MissingLeadingZeros; i++){
           Partner = '0' + Partner; 
         }
       }
-      var sBalancePath = "/ZADOC_ROYALTIES_MONITOR"; 
+      var sBalancePath = "/ZADOC_ROYALTIES_BALANCE"; 
       var oBalaceFilter = new sap.ui.model.Filter(
         "Partner",
         sap.ui.model.FilterOperator.EQ,
