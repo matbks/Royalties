@@ -5,7 +5,7 @@
 >
 	<Dialog
 		id="openDialog"
-		title="{i18n>discharge}"
+		title="Baixa Agrupada"
 	>
 		<beginButton>
 			<Button
@@ -51,7 +51,7 @@
 					id="Quantity"
 					type="Number"
 				/>
-				<Label text="Saldo"/>
+				<Label text="Saldo bloqueado"/>
 				<Input
 					id="Balance"  
 					enabled="false"
