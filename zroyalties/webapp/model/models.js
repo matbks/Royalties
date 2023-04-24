@@ -73,8 +73,8 @@ sap.ui.define(
 
       createRadioButtonsModel: function () {
         var oModel = new JSONModel({
-          Parceiro: "false", 
-          Contrato: "false", 
+          Parceiro: false, 
+          Contrato: false, 
         });
         return oModel;
       },
