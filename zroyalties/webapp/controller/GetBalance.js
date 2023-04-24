@@ -23,31 +23,23 @@ sap.ui.define(
 
       getBalance: function (Type, Value, oInput, oParentView) {
         var Path;
+        var oFilters = [];
         if (Type === "Parceiro") {
+
           var oFilter = new sap.ui.model.Filter(
             "Partner",
             sap.ui.model.FilterOperator.EQ,
             Value
           );
 
+          oFilters.push(oFilter);
+
           Path = "/ZADOC_ROYALTIES_BALANCE";
-        } else if (Type === "Contrato") {
-          var oFilters = [];
 
-          var SelectedPartner = oParentView.byId("Partner").getValue();
+        } else if (Type === "Contrato") { 
 
-          if (SelectedPartner) {
-            // SelectedPartner = this.AlphaIn(Type, SelectedPartner);
-
-            // var oPartnerFilter = new sap.ui.model.Filter(
-            //   "Partner",
-            //   sap.ui.model.FilterOperator.EQ,
-            //   SelectedPartner
-            // );
-
-            // oFilters.push(oPartnerFilter);
-          } 
-
+          // var SelectedPartner = oParentView.byId("Partner").getValue();
+  
           var oContractFilter = new sap.ui.model.Filter(
             "Contract",
             sap.ui.model.FilterOperator.EQ,
