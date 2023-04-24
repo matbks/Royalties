@@ -21,7 +21,7 @@ sap.ui.define(
         title, // título da janela do value help
         entitySet, // entitySet que provém os dados do value hlep
         key, // chave value help ( valor que será utilizado, ex: código do BP )
-        description, // descrição da chave do value help ( ex: Descrição do BP)
+        description, // descrição da chave do value help ( ex: Descrição do BP) 
         oSource, // oEvent.getSource() de onde o value help é chamado,
         filterName,
         filterValue,
@@ -48,11 +48,22 @@ sap.ui.define(
           // Criação do template do item do dialog
           var oItemTemplate = new StandardListItem({
             title: "{" + key + "}",
-            description: "{" + description + "}",
+            description: "{" + description + "}", 
           });
         }
 
         var aFilters = [];
+
+        if (title == 'Contrato'){
+          var oContractFilter = new sap.ui.model.Filter(
+            "Partner",
+            sap.ui.model.FilterOperator.EQ,
+            oParentView.byId("Partner").getValue()
+
+          );
+
+          aFilters.push(oContractFilter);
+        }
 
         if (filterValue && filterName) {
           // Create the filter object
@@ -124,7 +135,8 @@ sap.ui.define(
           OnCloseValueHelpBadi.run(
             oEvent,
             oSelectedItem,
-            oEvent.getSource().getParent()
+            oEvent.getSource().getParent(),
+            oEvent.getSource().mProperties.title
           );
 
           oEvent.getSource().getBinding("items").filter([]);

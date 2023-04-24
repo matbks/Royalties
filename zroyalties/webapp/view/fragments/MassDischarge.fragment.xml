@@ -32,8 +32,8 @@
 					mask="999.999.999-99"
 					placeholder="{i18n>addCPF}"
 				/> -->
-				<!-- <Label text="Parceiro"/> -->
-				<RadioButton
+				<Label text="Parceiro"/>
+				<!-- <RadioButton
 					id="RB3-1"
 					groupName="RadioGroup"
 					text="Parceiro:"
@@ -41,15 +41,15 @@
 					class="myAppDemoWT"
 					selected="{RadioButtons>/Parceiro}"
 					select="onPartnerSelected"
-				/>
+				/> -->
 				<Input
 					id="Partner"
 					valueHelpOnly="true"
 					showValueHelp="true"
 					valueHelpRequest="onPartnerF4"
 				/>
-				<!-- <Label text="Contrato"/> -->
-				<RadioButton
+				<Label text="Contrato"/>
+				<!-- <RadioButton
 					id="RB3-2"
 					groupName="RadioGroup"
 					text="Contrato:"
@@ -57,7 +57,7 @@
 					class="myAppDemoWT" 
 					selected="{RadioButtons>/Contrato}"
 					select="onContractSelected"
-				/>
+				/> -->
 				<Input
 					id="Contract"
 					valueHelpOnly="true"

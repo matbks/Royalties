@@ -470,8 +470,8 @@ sap.ui.define(
             var oModelLog = oView.getModel("Discharge");
             oModelLog.setData(SelectedItem);
             var oModel = this.getView().getModel();
-            var Balance = "0.00";
-            Balance = oModelLog.getData().Balance.toString();
+            // var Balance = "0.00";
+            // Balance = oModelLog.getData().Balance.toString();
             var payload = {
               Plant: oModelMonitor.getData().Plant,
               Romaneio: oModelMonitor.getData().Romaneio,
@@ -479,7 +479,7 @@ sap.ui.define(
               Discharge: oModelLog.getData().Discharge,
               Fiscalyear: oModelLog.getData().FiscalYear,
               Createdon: new Date(oModelLog.getData().CreatedOn),
-              Balance: Balance,
+              // Balance: Balance,
               Dischargestatus: "BAIXA MANUAL",
               Operation: "2",
             };
