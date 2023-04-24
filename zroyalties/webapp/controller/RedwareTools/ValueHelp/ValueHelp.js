@@ -133,8 +133,8 @@ sap.ui.define(
             return;
           }
 
-          if (oSelectedItem.getTitle)
-            this.oSource.setValue(oSelectedItem.getTitle);
+          if (oSelectedItem)
+            this.oSource.setValue(oSelectedItem);
         }
       },
     };
