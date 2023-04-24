@@ -147,6 +147,10 @@ sap.ui.define(
         this._oList.getBinding("items").refresh();
       },
 
+      onRBContract: function(oEvent){
+        
+      },
+
       /**
        * Event handler for the filter, sort and group buttons to open the ViewSettingsDialog.
        * @param {sap.ui.base.Event} oEvent the button press event
