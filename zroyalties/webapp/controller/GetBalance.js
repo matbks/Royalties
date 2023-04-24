@@ -19,8 +19,8 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
       }
     },
 
-    getBalance: function (Type, Value, oInput) {
-      var Path;
+    getBalance: function (Type, Value, oInput, oParentView) {
+      var Path; 
       if (Type === "Parceiro") {
 
         var oFilter = new sap.ui.model.Filter(
