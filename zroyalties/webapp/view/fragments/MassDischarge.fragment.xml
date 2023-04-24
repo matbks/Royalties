@@ -39,7 +39,7 @@
 					text="Parceiro:"
 					width="65px"
 					class="myAppDemoWT"
-					selected="{radioButton>/Parceiro}"
+					selected="{RadioButtons>/Parceiro}"
 					select="onPartnerSelected"
 				/>
 				<Input
@@ -55,7 +55,7 @@
 					text="Contrato:"
 					width="65px"
 					class="myAppDemoWT" 
-					selected="{radioButton>/Contrato}"
+					selected="{RadioButtons>/Contrato}"
 					select="onContractSelected"
 				/>
 				<Input
