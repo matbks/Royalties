@@ -1,0 +1,5 @@
+html[dir="ltr"] .myAppDemoWT .sapMRb:focus:before,
+html[dir="rtl"] .myAppDemoWT .sapMRb:focus:before {
+  outline: none !important;
+  box-shadow: none !important;
+}

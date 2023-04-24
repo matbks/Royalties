@@ -117,8 +117,8 @@ sap.ui.define(
 
       _onValueHelpClose: function (oEvent) {
         var oSelectedItem = oEvent.getParameter("selectedItem");
-
-        OnCloseValueHelpBadi.run(oEvent, oSelectedItem, this.getView() );
+        debugger;
+        OnCloseValueHelpBadi.run(oEvent, oSelectedItem, oEvent.getSource().getParent() );
 
         oEvent.getSource().getBinding("items").filter([]);
 

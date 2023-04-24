@@ -40,7 +40,7 @@ sap.ui.define(
        * Called when the list controller is instantiated. It sets up the event handling for the list/detail communication and other lifecycle tasks.
        * @public
        */
-      onInit: function () {
+      onInit: function () { 
         this.getView().addEventDelegate(
           {
             onAfterShow: function (oEvent) {
@@ -90,6 +90,8 @@ sap.ui.define(
         // oModelUtils.setProperty("/st_monitor", stMonitor);
         this.setSmartTable("st_monitor");
       },
+ 
+       
 
       /* =========================================================== */
       /* event handlers                                              */

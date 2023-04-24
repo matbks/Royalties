@@ -32,14 +32,28 @@
 					mask="999.999.999-99"
 					placeholder="{i18n>addCPF}"
 				/> -->
-				<Label text="Parceiro"/>
+				<!-- <Label text="Parceiro"/> -->
+				<RadioButton
+					id="RB3-1"
+					groupName="RadioGroup"
+					text="Parceiro:"
+					width="65px"
+					class="myAppDemoWT"
+				/>
 				<Input
 					id="Partner"
 					valueHelpOnly="true"
 					showValueHelp="true"
 					valueHelpRequest="onPartnerF4"
 				/>
-				<Label text="Contrato"/>
+				<!-- <Label text="Contrato"/> -->
+				<RadioButton
+					id="RB3-2"
+					groupName="RadioGroup"
+					text="Contrato:"
+					width="65px"
+					class="myAppDemoWT"
+				/>
 				<Input
 					id="Contract"
 					valueHelpOnly="true"
@@ -53,7 +67,7 @@
 				/>
 				<Label text="Saldo bloqueado"/>
 				<Input
-					id="Balance"  
+					id="Balance"
 					enabled="false"
 					value="0.00"
 				/>

@@ -5,9 +5,13 @@ sap.ui.define(
     return {
       run: function (oEvent, oSelectedItem, oParentView) {
         if (oSelectedItem) {
-          debugger;
+           
           var oBalanceInput = oEvent.getSource().getParent().byId("Balance");
+
           var Type =  oEvent.getSource().getTitle();
+  
+          debugger;
+          
           new GetBalance(
             Type,
             oSelectedItem,
