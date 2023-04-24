@@ -89,7 +89,7 @@
 				persistencyKey="SmartTableAnalytical_Explored"
 				class="sapUiResponsiveContentPadding"
 				app:useSmartToggle="true"
-				initiallyVisibleFields="Material,MaterialDescription,Property,PropertyDescription,ApplicationQuantity,Discharges,ChangedBy,ChangedOn,Romaneio,TicketDate,Partner,PartnerId,PartnerDescription,Plant,EdcNum"
+				initiallyVisibleFields="Material,MaterialDescription,Property,PropertyDescription,ApplicationQuantity,Discharges,ChangedBy,ChangedOn,Romaneio,TicketDate,Partner,PartnerDescription,PartnerId,Plant,EdcNum"
 				
 				showFullScreenButton="true" 
 				busyIndicatorDelay="{listView>/delay}"

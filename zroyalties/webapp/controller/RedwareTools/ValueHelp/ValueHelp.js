@@ -75,6 +75,8 @@ sap.ui.define(
 
           aFilters.push(oFilter);
 
+         }
+
           if (filter2Value && filter2Name) {
             var oFilter2 = new sap.ui.model.Filter(
               filter2Name,
@@ -84,6 +86,8 @@ sap.ui.define(
 
             aFilters.push(oFilter2);
           }
+
+          if (aFilters){
 
           // Bind the aggregation with the filter
           oSelectDialog.bindAggregation("items", {
