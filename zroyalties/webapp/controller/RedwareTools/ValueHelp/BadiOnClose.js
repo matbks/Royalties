@@ -8,7 +8,7 @@ sap.ui.define(
  
           var oBalanceInput = oEvent.getSource().getParent().byId("Balance"); 
           var oRadioButtonsModel = oEvent.getSource().getParent().getModel("RadioButtons")
-          var Type = oRadioButtonsModel.getProperpety("/Parceiro") == true ? 'Parceiro' : 'Contrato';
+          var Type = oRadioButtonsModel.getProperty("/Parceiro") == true ? 'Parceiro' : 'Contrato';
    
           new GetBalance(
             Type,
