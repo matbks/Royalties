@@ -147,7 +147,7 @@ sap.ui.define(
 
       // Método onPartnerSelected
       onPartnerSelected: function (oEvent) {
-        var oRadioButtonModel = this.getView().getModel("radioButton");
+        var oRadioButtonModel = this.getView().getModel("RadioButtons");
         var bSelected = oEvent.getParameter("selected");
         oRadioButtonModel.setProperty("/Parceiro", bSelected);
         oRadioButtonModel.setProperty("/Contrato", !bSelected);
@@ -155,7 +155,7 @@ sap.ui.define(
 
       // Método onContractSelected
       onContractSelected: function (oEvent) {
-        var oRadioButtonModel = this.getView().getModel("radioButton");
+        var oRadioButtonModel = this.getView().getModel("RadioButtons");
         var bSelected = oEvent.getParameter("selected");
         oRadioButtonModel.setProperty("/Parceiro", !bSelected);
         oRadioButtonModel.setProperty("/Contrato", bSelected);
