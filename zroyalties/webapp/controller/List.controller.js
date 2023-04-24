@@ -151,6 +151,7 @@ sap.ui.define(
         var bSelected = oEvent.getParameter("selected");
         oRadioButtonModel.setProperty("/Parceiro", bSelected);
         oRadioButtonModel.setProperty("/Contrato", !bSelected);
+        var oContractInput = oEvent.getSource().getParent().byId("Contract").
       },
 
       // Método onContractSelected
