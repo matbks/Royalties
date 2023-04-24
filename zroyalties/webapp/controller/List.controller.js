@@ -151,7 +151,7 @@ sap.ui.define(
         var bSelected = oEvent.getParameter("selected");
         oRadioButtonModel.setProperty("/Parceiro", bSelected);
         oRadioButtonModel.setProperty("/Contrato", !bSelected);
-        oEvent.getSource().getParent().byId("Contract").setValue("");
+        this.getView().byId("Contract").setValue("");
       },
 
       // Método onContractSelected
@@ -160,7 +160,7 @@ sap.ui.define(
         var bSelected = oEvent.getParameter("selected");
         oRadioButtonModel.setProperty("/Parceiro", !bSelected);
         oRadioButtonModel.setProperty("/Contrato", bSelected);
-        oEvent.getSource().getParent().byId("Partner").setValue("");
+        this.getView().byId("Partner").setValue("");
       },
 
       /**
