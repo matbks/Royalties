@@ -67,8 +67,15 @@ sap.ui.define(
         var oModel = new JSONModel({
           st_monitor: "", 
           st_log: "", 
-        });
+        }); 
+        return oModel;
+      },
 
+      createRadioButtonsModel: function () {
+        var oModel = new JSONModel({
+          Parceiro: "false", 
+          Contrato: "false", 
+        });
         return oModel;
       },
     };

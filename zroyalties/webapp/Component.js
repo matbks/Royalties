@@ -33,6 +33,8 @@ sap.ui.define([
 
             this.setModel(models.createSmartTablesModel(), "SmartTables");   
 
+            this.setModel(models.createRadioButtonsModel(), "RadioButtons");   
+
             // call the base component's init function and create the App view
             UIComponent.prototype.init.apply(this, arguments);
 

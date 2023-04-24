@@ -40,7 +40,7 @@ sap.ui.define(
        * Called when the list controller is instantiated. It sets up the event handling for the list/detail communication and other lifecycle tasks.
        * @public
        */
-      onInit: function () { 
+      onInit: function () {
         this.getView().addEventDelegate(
           {
             onAfterShow: function (oEvent) {
@@ -90,8 +90,6 @@ sap.ui.define(
         // oModelUtils.setProperty("/st_monitor", stMonitor);
         this.setSmartTable("st_monitor");
       },
- 
-       
 
       /* =========================================================== */
       /* event handlers                                              */
@@ -147,8 +145,20 @@ sap.ui.define(
         this._oList.getBinding("items").refresh();
       },
 
-      onRBContract: function(oEvent){
-        
+      // Método onPartnerSelected
+      onPartnerSelected: function (oEvent) {
+        var oRadioButtonModel = this.getView().getModel("radioButton");
+        var bSelected = oEvent.getParameter("selected");
+        oRadioButtonModel.setProperty("/Parceiro", bSelected);
+        oRadioButtonModel.setProperty("/Contrato", !bSelected);
+      },
+
+      // Método onContractSelected
+      onContractSelected: function (oEvent) {
+        var oRadioButtonModel = this.getView().getModel("radioButton");
+        var bSelected = oEvent.getParameter("selected");
+        oRadioButtonModel.setProperty("/Parceiro", !bSelected);
+        oRadioButtonModel.setProperty("/Contrato", bSelected);
       },
 
       /**
@@ -303,8 +313,10 @@ sap.ui.define(
           if (
             parseFloat(this.byId("Quantity").mProperties.value) >
             parseFloat(this.byId("Balance").mProperties.value)
-          ) { 
-            MessageToast.show("Selecione uma quantidade inferior ao total bloqueado");
+          ) {
+            MessageToast.show(
+              "Selecione uma quantidade inferior ao total bloqueado"
+            );
           } else {
             var MassDischargeData = [
               {
