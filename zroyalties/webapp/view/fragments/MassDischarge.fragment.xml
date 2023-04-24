@@ -52,7 +52,7 @@
 					groupName="RadioGroup"
 					text="Contrato:"
 					width="65px"
-					class="myAppDemoWT"
+					class="myAppDemoWT" 
 				/>
 				<Input
 					id="Contract"

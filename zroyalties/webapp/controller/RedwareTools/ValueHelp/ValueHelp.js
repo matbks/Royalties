@@ -117,17 +117,25 @@ sap.ui.define(
 
       _onValueHelpClose: function (oEvent) {
         var oSelectedItem = oEvent.getParameter("selectedItem");
-        debugger;
-        OnCloseValueHelpBadi.run(oEvent, oSelectedItem, oEvent.getSource().getParent() );
+        if (oSelectedItem) {
+          oSelectedItem = oSelectedItem.mProperties.title;
 
-        oEvent.getSource().getBinding("items").filter([]);
+          debugger;
+          OnCloseValueHelpBadi.run(
+            oEvent,
+            oSelectedItem,
+            oEvent.getSource().getParent()
+          );
 
-        if (!oSelectedItem) {
-          return;
+          oEvent.getSource().getBinding("items").filter([]);
+
+          if (!oSelectedItem) {
+            return;
+          }
+
+          if (oSelectedItem.getTitle())
+            this.oSource.setValue(oSelectedItem.getTitle);
         }
-
-        if (oSelectedItem.getTitle())
-          this.oSource.setValue(oSelectedItem.getTitle());
       },
     };
   }

@@ -20,6 +20,7 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
     },
 
     getBalance: function (Type, Value, oInput, oParentView) {
+      debugger;
       var Path; 
       if (Type === "Parceiro") {
 

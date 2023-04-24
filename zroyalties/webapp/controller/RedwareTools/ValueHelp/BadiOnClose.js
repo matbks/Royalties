@@ -7,8 +7,8 @@ sap.ui.define(
         if (oSelectedItem) {
            
           var oBalanceInput = oEvent.getSource().getParent().byId("Balance");
-
-          var Type =  oEvent.getSource().getTitle();
+           
+          var Type = oEvent.getSource().getParent().byId("RB3-1").mProperties.selected = true ? 'Parceiro' : 'Contrato';
   
           debugger;
           
