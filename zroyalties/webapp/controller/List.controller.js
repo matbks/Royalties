@@ -317,7 +317,7 @@ sap.ui.define(
             parseFloat(this.byId("Balance").mProperties.value)
           ) {
             MessageToast.show(
-              "Selecione uma quantidade inferior ao total bloqueado"
+              "Selecione uma quantidade inferior ou igual ao total bloqueado"
             );
           } else {
             var MassDischargeData = [

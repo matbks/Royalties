@@ -90,7 +90,7 @@ sap.ui.define(
             // );
             var balanceInput = this.byId("balanceInput").mProperties.value;
             if (parseFloat(discharge) > parseFloat(balanceInput)) {
-              MessageToast.show("Insira uma baixa de valor inferior ao saldo");
+              MessageToast.show("Insira uma baixa de valor inferior ou igual ao saldo");
             } else {
               if (discharge.includes(",")) {
                 discharge = discharge.toString().replace(",", ".");
