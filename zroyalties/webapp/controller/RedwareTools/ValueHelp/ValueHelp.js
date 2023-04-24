@@ -58,8 +58,7 @@ sap.ui.define(
           var oContractFilter = new sap.ui.model.Filter(
             "Partner",
             sap.ui.model.FilterOperator.EQ,
-            oParentView.byId("Partner").getValue()
-
+            oParentView.byId("Partner").getValue().padStart(10, '0')
           );
 
           aFilters.push(oContractFilter);
