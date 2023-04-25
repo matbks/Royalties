@@ -300,6 +300,7 @@ sap.ui.define(
         this.byId("Contract").mProperties.value = "";
         this.byId("Partner").mProperties.value = "";
         this.byId("Quantity").mProperties.value = "";
+        this.byId("Protocol").mProperties.value = "";
         this.byId("openDialog").destroy();
       },
 

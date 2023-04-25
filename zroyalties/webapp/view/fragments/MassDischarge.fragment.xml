@@ -64,6 +64,13 @@
 					showValueHelp="true"
 					valueHelpRequest="onContractF4"
 				/>
+				
+				<Label text="Protocolo"/>
+				<Input
+					id="Protocol" 
+					required="true"
+				/>
+
 				<Label text="Quantidade a baixar"/>
 				<Input
 					id="Quantity"
@@ -76,12 +83,7 @@
 					enabled="false"
 					value="0.00"
 				/>
-
-				<Label text="Protocolo"/>
-				<Input
-					id="Protocol" 
-					required="true"
-				/>
+ 
 			</f:content>
 		</f:SimpleForm>
 	</Dialog>
