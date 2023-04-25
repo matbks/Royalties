@@ -308,9 +308,10 @@ sap.ui.define(
         var oModel = this.getView().getModel();
         var oSmartTable = this.getView().byId("st_monitor");
         if (
-          (this.byId("Contract").mProperties.value != "" ||
-            this.byId("Partner").mProperties.value != "") &&
-          this.byId("Quantity").mProperties.value != ""
+          ( this.byId("Contract").mProperties.value != ""   ||
+            this.byId("Partner").mProperties.value  != "" ) &&
+            this.byId("Quantity").mProperties.value != ""   &&
+            this.byId("Protocol").mProperties.value != ""
         ) {
           if (
             parseFloat(this.byId("Quantity").mProperties.value) >
@@ -325,6 +326,7 @@ sap.ui.define(
                 Contract: this.byId("Contract").mProperties.value,
                 Partner: this.byId("Partner").mProperties.value,
                 Quantity: this.byId("Quantity").mProperties.value,
+                Protocol: this.byId("Protocol").mProperties.value
               },
             ];
 

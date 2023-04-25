@@ -68,12 +68,19 @@
 				<Input
 					id="Quantity"
 					type="Number"
+					required="true"
 				/>
 				<Label text="Saldo bloqueado"/>
 				<Input
 					id="Balance"
 					enabled="false"
 					value="0.00"
+				/>
+
+				<Label text="Protocolo"/>
+				<Input
+					id="Protocol" 
+					required="true"
 				/>
 			</f:content>
 		</f:SimpleForm>

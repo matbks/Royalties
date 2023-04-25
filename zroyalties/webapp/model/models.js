@@ -58,6 +58,7 @@ sap.ui.define(
           Creationdate: "",
           Dischargestatus: "",
           Balance: "",
+          Protocol: "",
         });
 
         return oModel;
