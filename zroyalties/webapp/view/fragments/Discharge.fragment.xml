@@ -34,7 +34,10 @@
 				/> -->
 				<Label text="Propriedade"/>
 				<Input value="{Monitor>/Property}" editable="false" enabled="false"/>
-				
+
+				<Label text="Protocolo"/>
+				<Input id="Protocol" />
+				 
 				<Label text="{i18n>BalanceAmount}"/>
 				<Input 
 					editable="false" 

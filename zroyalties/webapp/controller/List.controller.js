@@ -345,6 +345,7 @@ sap.ui.define(
                     .getText("discharged");
                   debugger;
                   // MessageBox.success(msg);
+                  
                   MessageToast.show(msg);
                   oSmartTable.rebindTable();
 
@@ -414,7 +415,7 @@ sap.ui.define(
         var results = oModelMonitor.getData();
         var discharge = this.byId("dischargeInput").mProperties.value;
         var balanceInput = this.byId("balanceInput").mProperties.value;
-
+        var protocol = this.byId("Protocol").mProperties.value;
         var d = new Date();
         var currentYear = d.getFullYear();
         debugger;
@@ -429,6 +430,7 @@ sap.ui.define(
           Dischargestatus: "BAIXA MANUAL",
           Createdon: new Date(),
           Operation: "1",
+          Protocol: protocol
         };
 
         oModel.create("/DischargeQtySet", payload, {
