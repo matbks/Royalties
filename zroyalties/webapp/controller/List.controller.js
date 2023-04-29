@@ -12,22 +12,22 @@ sap.ui.define(
     "sap/m/MessageToast",
     "sap/ui/vk/Material",
     "./RedwareTools/ValueHelp/ValueHelp",
-	"sap/ui/core/UIComponent",
+    "sap/ui/core/UIComponent",
   ],
   function (
     BaseController,
-	JSONModel,
-	Filter,
-	Sorter,
-	FilterOperator,
-	GroupHeaderListItem,
-	Device,
-	Fragment,
-	formatter,
-	MessageToast,
-	Material,
-	ValueHelp,
-	UIComponent
+    JSONModel,
+    Filter,
+    Sorter,
+    FilterOperator,
+    GroupHeaderListItem,
+    Device,
+    Fragment,
+    formatter,
+    MessageToast,
+    Material,
+    ValueHelp,
+    UIComponent
   ) {
     "use strict";
 
@@ -125,7 +125,6 @@ sap.ui.define(
           this.onRefresh();
           return;
         }
-
         var sQuery = oEvent.getParameter("query");
 
         if (sQuery) {
@@ -316,10 +315,10 @@ sap.ui.define(
         var oModel = this.getView().getModel();
         var oSmartTable = this.getView().byId("st_monitor");
         if (
-          ( this.byId("Contract").mProperties.value != ""   ||
-            this.byId("Partner").mProperties.value  != "" ) &&
-            this.byId("Quantity").mProperties.value != ""   &&
-            this.byId("Protocol").mProperties.value != ""
+          (this.byId("Contract").mProperties.value != "" ||
+            this.byId("Partner").mProperties.value != "") &&
+          this.byId("Quantity").mProperties.value != "" &&
+          this.byId("Protocol").mProperties.value != ""
         ) {
           if (
             parseFloat(this.byId("Quantity").mProperties.value) >
@@ -334,7 +333,7 @@ sap.ui.define(
                 Contract: this.byId("Contract").mProperties.value,
                 Partner: this.byId("Partner").mProperties.value,
                 Quantity: this.byId("Quantity").mProperties.value,
-                Protocol: this.byId("Protocol").mProperties.value
+                Protocol: this.byId("Protocol").mProperties.value,
               },
             ];
 
@@ -352,7 +351,7 @@ sap.ui.define(
                     .getText("discharged");
                   debugger;
                   // MessageBox.success(msg);
-                  
+
                   MessageToast.show(msg);
                   oSmartTable.rebindTable();
 
@@ -437,7 +436,7 @@ sap.ui.define(
           Dischargestatus: "BAIXA MANUAL",
           Createdon: new Date(),
           Operation: "1",
-          Protocol: protocol
+          Protocol: protocol,
         };
 
         oModel.create("/DischargeQtySet", payload, {
@@ -609,6 +608,7 @@ sap.ui.define(
             )
           );
         } else if (this._oListFilterState.aSearch.length > 0) {
+          debugger;
           // only reset the no data text to default when no new search was triggered
           oViewModel.setProperty(
             "/noDataText",
