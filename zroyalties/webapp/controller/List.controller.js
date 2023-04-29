@@ -12,20 +12,22 @@ sap.ui.define(
     "sap/m/MessageToast",
     "sap/ui/vk/Material",
     "./RedwareTools/ValueHelp/ValueHelp",
+	"sap/ui/core/UIComponent",
   ],
   function (
     BaseController,
-    JSONModel,
-    Filter,
-    Sorter,
-    FilterOperator,
-    GroupHeaderListItem,
-    Device,
-    Fragment,
-    formatter,
-    MessageToast,
-    Material,
-    ValueHelp
+	JSONModel,
+	Filter,
+	Sorter,
+	FilterOperator,
+	GroupHeaderListItem,
+	Device,
+	Fragment,
+	formatter,
+	MessageToast,
+	Material,
+	ValueHelp,
+	UIComponent
   ) {
     "use strict";
 
@@ -277,6 +279,11 @@ sap.ui.define(
           title: oGroup.text,
           upperCase: false,
         });
+      },
+
+      onShowReport: function (oEvent) {
+        var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+        oRouter.navTo("report");
       },
 
       onMassDischarge: function (oEvent) {

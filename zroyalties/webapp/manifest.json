@@ -104,6 +104,12 @@
           "target": "list"
         },
         {
+          "name": "report",
+          "pattern": "report",
+          "target": [
+            "report" ]
+        },
+        {
           "pattern": "ZADOC_ROYALTIES_MONITOR/{objectId}",
           "name": "object",
           "target": [
@@ -132,6 +138,10 @@
         "notFound": {
           "viewName": "NotFound",
           "viewId": "notFound"
+        },
+        "report": {
+          "viewName": "Report",
+          "viewId": "report"
         }
       }
     },
