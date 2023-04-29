@@ -1,21 +1,21 @@
 <mvc:View
-	controllerName="royalties.zroyalties.controller.List"
+	controllerName="royalties.zroyalties.controller.Report"
 	xmlns="sap.m"
 	xmlns:semantic="sap.m.semantic"
 	xmlns:mvc="sap.ui.core.mvc"
-	id="monitorView"
+	id="reportView"
 >
 	<semantic:FullscreenPage
-		id="page02" 
+		id="report"
 		busy="{ProdProcView>/busy}"
-		title="{i18n>mainTitle}"
+		title="Relatório"
 		showFooter="false"
 	>
 		<semantic:content>
 			<smartFilterBar:SmartFilterBar
 				xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
-				id="sfb_monitor"
-				entitySet="ZADOC_ROYALTIES_MONITOR"
+				id="sfb_report"
+				entitySet="ZADOC_ROYALTIES_DISCHAR_REPORT"
 				persistencyKey="SmartFilter_Explored"
 			>
 				<smartFilterBar:controlConfiguration>
@@ -76,20 +76,18 @@
 					/>
 				</smartFilterBar:controlConfiguration>
 			</smartFilterBar:SmartFilterBar>
-			
 			<smartTable:SmartTable
 				id="st_monitor"
-				
 				xmlns:smartTable="sap.ui.comp.smarttable"
 				xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
-				entitySet="ZADOC_ROYALTIES_MONITOR"
+				entitySet="ZADOC_ROYALTIES_DISCHAR_REPORT"
 				tableType="Table"
 				header="{i18n>items}"
 				persistencyKey="SmartTableAnalytical_Explored"
 				class="sapUiResponsiveContentPadding"
 				app:useSmartToggle="true"
 				initiallyVisibleFields="EdcNum,ContractNum,Material,MaterialDescription,Property,PropertyDescription,ApplicationQuantity,Discharges,ChangedBy,ChangedOn,Romaneio,TicketDate,Partner,PartnerDescription,PartnerId,Plant"
-				showFullScreenButton="true" 
+				showFullScreenButton="true"
 				busyIndicatorDelay="{listView>/delay}"
 				smartFilterId="sfb_monitor"
 			>
@@ -106,28 +104,7 @@
 					growingScrollToLoad="true"
 					growingThreshold="30"
 					updateFinished=".onUpdateFinished"
-					selectionChange=".onSelectionChange"
 				/>
-				<smartTable:customToolbar>
-					<OverflowToolbar design="Transparent" id="toolBar">
-						<ToolbarSpacer id="toolBaarSpacer"/>
-						<OverflowToolbarButton
-						id="reportIcon"
-						icon="sap-icon://manager-insight"
-						text="{i18n>report}" 
-						tooltip="{i18n>report}"
-						press="onShowReport"
-					    />
-						<OverflowToolbarButton
-							id="dischargeIcon"
-							icon="sap-icon://drill-down"
-							text="{i18n>discharge}" 
-							tooltip="{i18n>discharge}"
-							press="onMassDischarge" 
-						/>
-					</OverflowToolbar>
-				</smartTable:customToolbar>
-
 			</smartTable:SmartTable>
 		</semantic:content>
 		<semantic:messagesIndicator>
@@ -136,14 +113,5 @@
 				press="onMessagesButtonPress"
 			/>
 		</semantic:messagesIndicator>
-		<!-- <semantic:customFooterContent>
-			<Button
-				id="ButtonSolicitation"
-				icon="sap-icon://arrow-bottom"
-				text="{i18n>discharge}"
-				type="Ghost"
-				press="onDischarge"
-			/>
-		</semantic:customFooterContent> -->
 	</semantic:FullscreenPage>
 </mvc:View>
