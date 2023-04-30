@@ -79,7 +79,6 @@
 			
 			<smartTable:SmartTable
 				id="st_monitor"
-				
 				xmlns:smartTable="sap.ui.comp.smarttable"
 				xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 				entitySet="ZADOC_ROYALTIES_MONITOR"
