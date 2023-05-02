@@ -79,6 +79,7 @@ sap.ui.define(
         var oModelMonitor = this.getOwnerComponent().getModel("Monitor");
         var oModel = this.getView().getModel();
         var discharge = this.byId("dischargeInput").mProperties.value;
+        var protocol = this.getView().byId("Protocol").getValue();
         if (discharge) {
           var regExp = /[a-zA-Z]/g;
 
@@ -112,6 +113,7 @@ sap.ui.define(
                   Dischargestatus: "BAIXA MANUAL",
                   Createdon: new Date(),
                   Operation: "1",
+                  Protocol: protocol
                 };
                 
                 
@@ -481,7 +483,7 @@ sap.ui.define(
               Createdon: new Date(oModelLog.getData().CreatedOn),
               // Balance: Balance,
               Dischargestatus: "BAIXA MANUAL",
-              Operation: "2",
+              Operation: "2" 
             };
 
             oModel.create("/DischargeQtySet", payload, {
