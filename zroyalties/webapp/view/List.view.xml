@@ -6,7 +6,7 @@
 	id="monitorView"
 >
 	<semantic:FullscreenPage
-		id="page02" 
+		id="page02"
 		busy="{ProdProcView>/busy}"
 		title="{i18n>mainTitle}"
 		showFooter="false"
@@ -76,7 +76,6 @@
 					/>
 				</smartFilterBar:controlConfiguration>
 			</smartFilterBar:SmartFilterBar>
-			
 			<smartTable:SmartTable
 				id="st_monitor"
 				xmlns:smartTable="sap.ui.comp.smarttable"
@@ -88,7 +87,7 @@
 				class="sapUiResponsiveContentPadding"
 				app:useSmartToggle="true"
 				initiallyVisibleFields="EdcNum,ContractNum,Material,MaterialDescription,Property,PropertyDescription,ApplicationQuantity,Discharges,ChangedBy,ChangedOn,Romaneio,TicketDate,Partner,PartnerDescription,PartnerId,Plant"
-				showFullScreenButton="true" 
+				showFullScreenButton="true"
 				busyIndicatorDelay="{listView>/delay}"
 				smartFilterId="sfb_monitor"
 				enableAutoBinding="true"
@@ -109,25 +108,27 @@
 					selectionChange=".onSelectionChange"
 				/>
 				<smartTable:customToolbar>
-					<OverflowToolbar design="Transparent" id="toolBar">
+					<OverflowToolbar
+						design="Transparent"
+						id="toolBar"
+					>
 						<ToolbarSpacer id="toolBaarSpacer"/>
 						<OverflowToolbarButton
-						id="reportIcon"
-						icon="sap-icon://manager-insight"
-						text="{i18n>report}" 
-						tooltip="{i18n>report}"
-						press="onShowReport"
-					    />
+							id="reportIcon"
+							icon="sap-icon://manager-insight"
+							text="{i18n>report}"
+							tooltip="{i18n>report}"
+							press="onShowReport"
+						/>
 						<OverflowToolbarButton
 							id="dischargeIcon"
 							icon="sap-icon://drill-down"
-							text="{i18n>discharge}" 
+							text="{i18n>discharge}"
 							tooltip="{i18n>discharge}"
-							press="onMassDischarge" 
+							press="onMassDischarge"
 						/>
 					</OverflowToolbar>
 				</smartTable:customToolbar>
-
 			</smartTable:SmartTable>
 		</semantic:content>
 		<semantic:messagesIndicator>

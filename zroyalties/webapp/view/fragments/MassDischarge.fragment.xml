@@ -73,44 +73,7 @@
 					visible="{listView>/massDischarge/buttons/partner/visible}"
 					value="{listView>/massDischarge/popUpData/partner}"
 				/>
-				<!-- <Label
-					text="CPF"
-					visible="{listView>/massDischarge/buttons/CPF/visible}"
-				/>
-				<MaskInput
-					id="CPF"
-					mask="000.000.000-00"
-					placeholderSymbol="_"
-					placeholder="Digite o CPF do parceiro"
-					visible="{listView>/massDischarge/buttons/CPF/visible}"
-					change="onCpfCnpjChange"
-				>
-					<rules>
-						<MaskInputRule
-							maskFormatSymbol="0"
-							regex="[0-9]"
-						/>
-					</rules>
-				</MaskInput>
-				<Label
-					text="CNPJ"
-					visible="{listView>/massDischarge/buttons/CNPJ/visible}"
-				/>
-				<MaskInput
-					id="CNPJ"
-					mask="00.000.000/0000-00"
-					placeholderSymbol="_"
-					placeholder="Digite o CNPJ do parceiro"
-					visible="{listView>/massDischarge/buttons/CNPJ/visible}"
-					change="onCpfCnpjChange"
-				>
-					<rules>
-						<MaskInputRule
-							maskFormatSymbol="0"
-							regex="[0-9]"
-						/>
-					</rules>
-				</MaskInput> -->
+				
 				<Label text="Contrato"/>
 				<!-- <RadioButton
 					id="RB3-2"
