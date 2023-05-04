@@ -32,7 +32,26 @@
 					mask="999.999.999-99"
 					placeholder="{i18n>addCPF}"
 				/> -->
-				<Label text="Parceiro"/>
+				<!-- <SegmentedButton
+					id="partnerReference"
+					selectedKey="partner"
+					selectionChange="onPartnerRefChange"
+				>
+					<items>
+						<SegmentedButtonItem
+							text="BP"
+							key="partner"
+						/>
+						<SegmentedButtonItem
+							text="CPF"
+							key="CPF"
+						/>
+						<SegmentedButtonItem
+							text="CNPJ"
+							key="CNPJ"
+						/>
+					</items>
+				</SegmentedButton> -->
 				<!-- <RadioButton
 					id="RB3-1"
 					groupName="RadioGroup"
@@ -42,12 +61,56 @@
 					selected="{RadioButtons>/Parceiro}"
 					select="onPartnerSelected"
 				/> -->
+				<Label
+					text="Parceiro"
+					visible="{listView>/massDischarge/buttons/partner/visible}"
+				/>
 				<Input
 					id="Partner"
 					valueHelpOnly="true"
 					showValueHelp="true"
-					valueHelpRequest="onPartnerF4"
+					valueHelpRequest="onValueHelpPartnerRequested"
+					visible="{listView>/massDischarge/buttons/partner/visible}"
+					value="{listView>/massDischarge/popUpData/partner}"
 				/>
+				<!-- <Label
+					text="CPF"
+					visible="{listView>/massDischarge/buttons/CPF/visible}"
+				/>
+				<MaskInput
+					id="CPF"
+					mask="000.000.000-00"
+					placeholderSymbol="_"
+					placeholder="Digite o CPF do parceiro"
+					visible="{listView>/massDischarge/buttons/CPF/visible}"
+					change="onCpfCnpjChange"
+				>
+					<rules>
+						<MaskInputRule
+							maskFormatSymbol="0"
+							regex="[0-9]"
+						/>
+					</rules>
+				</MaskInput>
+				<Label
+					text="CNPJ"
+					visible="{listView>/massDischarge/buttons/CNPJ/visible}"
+				/>
+				<MaskInput
+					id="CNPJ"
+					mask="00.000.000/0000-00"
+					placeholderSymbol="_"
+					placeholder="Digite o CNPJ do parceiro"
+					visible="{listView>/massDischarge/buttons/CNPJ/visible}"
+					change="onCpfCnpjChange"
+				>
+					<rules>
+						<MaskInputRule
+							maskFormatSymbol="0"
+							regex="[0-9]"
+						/>
+					</rules>
+				</MaskInput> -->
 				<Label text="Contrato"/>
 				<!-- <RadioButton
 					id="RB3-2"
@@ -64,13 +127,11 @@
 					showValueHelp="true"
 					valueHelpRequest="onContractF4"
 				/>
-				
 				<Label text="Protocolo"/>
 				<Input
-					id="Protocol" 
+					id="Protocol"
 					required="true"
 				/>
-
 				<Label text="Quantidade a baixar"/>
 				<Input
 					id="Quantity"
@@ -83,7 +144,6 @@
 					enabled="false"
 					value="0.00"
 				/>
- 
 			</f:content>
 		</f:SimpleForm>
 	</Dialog>

@@ -91,13 +91,14 @@
 				showFullScreenButton="true" 
 				busyIndicatorDelay="{listView>/delay}"
 				smartFilterId="sfb_monitor"
+				enableAutoBinding="true"
 			>
 				<Table
 					id="list"
 					includeItemInSelection="true"
 					contextualWidth="auto"
 					autoPopinMode="true"
-					sticky="ColumnHeaders"
+					sticky="ColumnHeaders,HeaderToolbar,InfoToolbar"
 					busyIndicatorDelay="{listView>/delay}"
 					noDataText="{listView>/noDataText}"
 					mode="SingleSelectMaster"

@@ -17,8 +17,8 @@ server:
           url: https://ui5.sap.com
         backend:
           - path: /sap
-            url: https://vhagyds4ci.sap.agrogalaxy.com.br:44300
-            client: '130'
+            url: https://vhagyqs4ci.sap.agrogalaxy.com.br:44300
+            client: '230'
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:

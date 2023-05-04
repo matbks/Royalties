@@ -1,6 +1,6 @@
 sap.ui.define(
-  ["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History"],
-  function (Controller, History) {
+  ["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap/ui/core/Fragment",],
+  function (Controller, History, Fragment) {
     "use strict";
 
     return Controller.extend("royalties.zroyalties.controller.BaseController", {
@@ -72,6 +72,35 @@ sap.ui.define(
           this.getRouter().navTo("list", {}, true);
         }
       },
+
+
+
+      loadFragment: function (fragmentName, oView) {
+
+        return new Promise(function (resolve, reject) {
+
+          var sPath = "royalties.zroyalties.view.fragments." + fragmentName;
+          if (!this.byId(fragmentName)) {
+
+            Fragment.load({
+              id: oView.createId(fragmentName),
+              name: sPath,
+              controller: this,
+            }).then(function (oDialog) {
+              oView.addDependent(oDialog);
+              resolve(oDialog);
+            }.bind(this));
+
+          } else {
+            resolve(this.byId(fragmentName));
+          };
+
+        }.bind(this));
+
+      }
+
+
+
     });
   }
 );
