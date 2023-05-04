@@ -387,7 +387,6 @@ sap.ui.define(
         var balance = 0.0;
         let oSmartTableLogs = this.getView().byId("st_log");
         var items_length = oSmartTableLogs.getTable().getItems().length;
-        debugger;
         for (var i = 0; i < items_length; i++) {
           var row = oSmartTableLogs
             .getTable()

@@ -15,6 +15,7 @@ sap.ui.define(
     "sap/ui/core/UIComponent",
     'sap/m/SearchField',
     'sap/ui/model/type/String',
+    "royalties/zroyalties/controller/GetBalance"
   ],
   function (
     BaseController,
@@ -31,7 +32,8 @@ sap.ui.define(
     ValueHelp,
     UIComponent,
     SearchField,
-    TypeString
+    TypeString,
+    GetBalance
   ) {
     "use strict";
 
@@ -323,7 +325,6 @@ sap.ui.define(
 
         var oInputField = this.byId(sKey);
         this._focusOnInputField(oInputField);
-        // debugger;
 
       },
 
@@ -331,9 +332,6 @@ sap.ui.define(
       onCpfCnpjChange: function (oEvent) {
         var sValue = oEvent.getParameter('newValue');
         var sValue = sValue.replace(/[.\-_\s]/g, '');
-        debugger;
-
-
 
       },
 
@@ -354,7 +352,6 @@ sap.ui.define(
       },
 
       handleSaveMassDischarge: function () {
-        debugger;
         var oModel = this.getView().getModel();
         var oSmartTable = this.getView().byId("st_monitor");
         if (
@@ -651,7 +648,6 @@ sap.ui.define(
       },
 
       onFilterBarSearch: function (oEvent) {
-        debugger;
         var aFilters = [];
 
         if (oEvent.sId === "liveChange") {
@@ -712,13 +708,23 @@ sap.ui.define(
       },
 
       onValueHelpOkPress: function (oEvent) {
-        debugger;
         var oViewModel = this.getView().getModel("listView")
         var aTokens = oEvent.getParameter("tokens");
         var sKey = aTokens[0].getKey();
 
         oViewModel.setProperty("/massDischarge/popUpData/partner", sKey);
         // this._oMultiInput.setTokens(aTokens);
+
+        if (sKey) {
+          new GetBalance(
+            "Parceiro",
+            sKey,
+            this.byId('Balance'),
+            this.getView()
+          );
+        }
+
+
         this._oVHD.close();
       },
 
@@ -854,7 +860,6 @@ sap.ui.define(
             )
           );
         } else if (this._oListFilterState.aSearch.length > 0) {
-          debugger;
           // only reset the no data text to default when no new search was triggered
           oViewModel.setProperty(
             "/noDataText",

@@ -134,7 +134,6 @@ sap.ui.define(
         if (oSelectedItem) {
           oSelectedItem = oSelectedItem.mProperties.title;
 
-          debugger;
           OnCloseValueHelpBadi.run(
             oEvent,
             oSelectedItem,
