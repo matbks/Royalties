@@ -54,7 +54,7 @@ sap.ui.define(
 
         var aFilters = [];
 
-        if (title == 'Contrato'){
+        if (title == 'Contrato' && oParentView.byId("Partner").getValue()){
           var oContractFilter = new sap.ui.model.Filter(
             "Partner",
             sap.ui.model.FilterOperator.EQ,
@@ -134,7 +134,6 @@ sap.ui.define(
         if (oSelectedItem) {
           oSelectedItem = oSelectedItem.mProperties.title;
 
-          debugger;
           OnCloseValueHelpBadi.run(
             oEvent,
             oSelectedItem,

@@ -1,0 +1,58 @@
+<core:FragmentDefinition
+	xmlns="sap.ui.comp.valuehelpdialog"
+	xmlns:m="sap.m"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:core="sap.ui.core"
+>
+	<ValueHelpDialog
+		title="{i18n>partner}"
+		ok=".onValueHelpOkPress"
+		cancel=".onValueHelpCancelPress"
+		supportRanges="false"
+		supportMultiselect="false"
+		key="Partner"
+		descriptionKey="PartnerDescription"
+	>
+		<filterBar>
+			<fb:FilterBar
+				advancedMode="true"
+				search=".onFilterBarSearch"
+				isRunningInValueHelpDialog="true"
+				showGoOnFB="false"
+			>
+				<fb:filterGroupItems>
+					<fb:FilterGroupItem
+						groupName="__$INTERNAL$"
+						name="Partner"
+						label="{i18n>partner}"
+						visibleInFilterBar="true"
+					>
+						<fb:control>
+							<m:Input name="Partner" liveChange="onFilterBarSearch"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem
+						groupName="__$INTERNAL$"
+						name="PartnerDescription"
+						label="{i18n>partnerName}"
+						visibleInFilterBar="true"
+					>
+						<fb:control>
+							<m:Input name="PartnerDescription" liveChange="onFilterBarSearch"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem
+						groupName="__$INTERNAL$"
+						name="CnpjOrCpf"
+						label="{i18n>CPForCNPJ}}"
+						visibleInFilterBar="true"
+					>
+						<fb:control>
+							<m:Input name="CnpjOrCpf" liveChange="onFilterBarSearch"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+				</fb:filterGroupItems>
+			</fb:FilterBar>
+		</filterBar>
+	</ValueHelpDialog>
+</core:FragmentDefinition>

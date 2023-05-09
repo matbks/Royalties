@@ -13,6 +13,9 @@ sap.ui.define(
     "sap/ui/vk/Material",
     "./RedwareTools/ValueHelp/ValueHelp",
     "sap/ui/core/UIComponent",
+    'sap/m/SearchField',
+    'sap/ui/model/type/String',
+    "royalties/zroyalties/controller/GetBalance"
   ],
   function (
     BaseController,
@@ -27,7 +30,10 @@ sap.ui.define(
     MessageToast,
     Material,
     ValueHelp,
-    UIComponent
+    UIComponent,
+    SearchField,
+    TypeString,
+    GetBalance
   ) {
     "use strict";
 
@@ -302,6 +308,41 @@ sap.ui.define(
         }
       },
 
+
+      onPartnerRefChange: function (oEvent) {
+        var oViewModel = this.getView().getModel("listView");
+        var oData = oViewModel.getData();
+
+        var sKey = oEvent.getParameter('item').getKey();
+
+        oData.massDischarge.buttons.partner.visible = false;
+        oData.massDischarge.buttons.CPF.visible = false;
+        oData.massDischarge.buttons.CNPJ.visible = false;
+
+        oData.massDischarge.buttons[sKey].visible = true;
+
+        oViewModel.refresh();
+
+        var oInputField = this.byId(sKey);
+        this._focusOnInputField(oInputField);
+
+      },
+
+
+      onCpfCnpjChange: function (oEvent) {
+        var sValue = oEvent.getParameter('newValue');
+        var sValue = sValue.replace(/[.\-_\s]/g, '');
+
+      },
+
+
+      _focusOnInputField: function (oField) {
+        oField.getDomRef().focus();
+      },
+
+
+
+
       handleCancelMassDischarge: function () {
         this.byId("Contract").mProperties.value = "";
         this.byId("Partner").mProperties.value = "";
@@ -311,7 +352,6 @@ sap.ui.define(
       },
 
       handleSaveMassDischarge: function () {
-        debugger;
         var oModel = this.getView().getModel();
         var oSmartTable = this.getView().byId("st_monitor");
         if (
@@ -349,7 +389,6 @@ sap.ui.define(
                     .getModel("i18n")
                     .getResourceBundle()
                     .getText("discharged");
-                  debugger;
                   // MessageBox.success(msg);
 
                   MessageToast.show(msg);
@@ -424,7 +463,6 @@ sap.ui.define(
         var protocol = this.byId("Protocol").mProperties.value;
         var d = new Date();
         var currentYear = d.getFullYear();
-        debugger;
 
         var payload = {
           Plant: oModelMonitor.getData().Plant,
@@ -446,7 +484,6 @@ sap.ui.define(
                 .getModel("i18n")
                 .getResourceBundle()
                 .getText("discharged");
-              debugger;
               // MessageBox.success(msg);
               MessageToast.show(msg);
               this.clearModel(oModelMonitor);
@@ -517,6 +554,211 @@ sap.ui.define(
         oSelectDialog.open();
       },
 
+
+
+
+      onValueHelpPartnerRequested: function () {
+        this._oBasicSearchField = new SearchField({ liveChange: this.onFilterBarSearch.bind(this) });
+
+        if (!this.pDialog) {
+          this.pDialog = this.loadFragment("ValueHelpPartner", this.getView());
+        }
+        this.pDialog.then(function (oDialog) {
+          var oFilterBar = oDialog.getFilterBar();
+          this._oVHD = oDialog;
+          if (this._bDialogInitialized) {
+            oDialog.update();
+            oDialog.open();
+            return;
+          }
+          this.getView().addDependent(oDialog);
+
+          oFilterBar.setFilterBarExpanded(false);
+          oFilterBar.setBasicSearch(this._oBasicSearchField);
+
+          this._oBasicSearchField.attachSearch(function () {
+            oFilterBar.search();
+          });
+
+          oDialog.getTableAsync().then(function (oTable) {
+
+            oTable.setModel(this.getView().getModel());
+
+            // For Desktop and tabled the default table is sap.ui.table.Table
+            if (oTable.bindRows) {
+              oTable.bindAggregation("rows", {
+                path: "/ZADOC_ROYALTIES_PARTNERS",
+                events: {
+                  dataReceived: function () {
+                    oDialog.update();
+                  }
+                }
+              });
+              oTable.addColumn(new sap.ui.table.Column({ label: "Parceiro", template: "Partner", width: "100px" }));
+              oTable.addColumn(new sap.ui.table.Column({ label: "Nome do Parceiro", template: "PartnerDescription" }));
+              oTable.addColumn(new sap.ui.table.Column({
+                label: "CNPJ/CPF",
+                template: new sap.m.Text({
+                  text: {
+                    parts: ["CnpjOrCpf"],
+                    formatter: this.formatCnpjCpf
+                  }
+                })
+              }));
+
+            }
+
+            // For Mobile the default table is sap.m.Table
+            if (oTable.bindItems) {
+              oTable.bindAggregation("items", {
+                path: "/ZADOC_ROYALTIES_PARTNERS",
+                template: new ColumnListItem({
+                  cells: [new Label({ text: "{Partner}" }), new sap.m.Label({ text: "{PartnerDescription}" })]
+                }),
+                events: {
+                  dataReceived: function () {
+                    oDialog.update();
+                  }
+                }
+              });
+              oTable.addColumn(new sap.m.Column({ header: new sap.m.Label({ text: "Parceiro" }) }));
+              oTable.addColumn(new sap.m.Column({ header: new sap.m.Label({ text: "Nome do Parceiro" }) }));
+            }
+            oDialog.update();
+          }.bind(this));
+
+          this._bDialogInitialized = true;
+          oDialog.open();
+
+        }.bind(this));
+      },
+
+
+      formatCnpjCpf: function (value) {
+        if (!value) { return };
+
+        if (value.length === 11) {
+          return value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+        } else if (value.length === 14) {
+          return value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+        } else {
+          return value;
+        };
+
+      },
+
+      onFilterBarSearch: function (oEvent) {
+        var aFilters = [];
+
+        if (oEvent.sId === "liveChange") {
+          var sSearchQuery = oEvent.getParameter("value");
+          if (!sSearchQuery) {
+            var sSearchQuery = oEvent.getParameter("newValue");
+          };
+        } else {
+          var sSearchQuery = this._oBasicSearchField.getValue();
+        };
+
+        var aSelectionSet = oEvent.getParameter("selectionSet");
+
+        if (aSelectionSet) {
+          var aFilters = aSelectionSet.reduce(function (aResult, oControl) {
+            if (oControl.getValue()) {
+              aResult.push(new Filter({
+                path: oControl.getName(),
+                operator: FilterOperator.Contains,
+                value1: oControl.getValue()
+              }));
+            }
+            return aResult;
+          }, []);
+        }
+
+        function isSearchQueryValid(sSearchQuery) {
+          const regex = /^[0-9.\-\/]+$/;
+          return regex.test(sSearchQuery);
+        }
+
+        function removeSpecialChars(sSearchQuery) {
+          const regex = /[.\-\/]/g;
+          return sSearchQuery.replace(regex, '');
+        }
+
+        if (isSearchQueryValid(sSearchQuery)) {
+          sSearchQuery = removeSpecialChars(sSearchQuery);
+        }
+
+        aFilters.push(new Filter({
+          filters: [
+            new Filter({ path: "Partner", operator: FilterOperator.Contains, value1: sSearchQuery }),
+            new Filter({ path: "PartnerDescription", operator: FilterOperator.Contains, value1: sSearchQuery }),
+            new Filter({ path: "CnpjOrCpf", operator: FilterOperator.Contains, value1: sSearchQuery })
+          ],
+          and: false
+        }));
+
+        this._filterTable(new Filter({
+          filters: aFilters,
+          and: true
+        }));
+      },
+
+      onValueHelpCancelPress: function () {
+        this._oVHD.close();
+      },
+
+      onValueHelpOkPress: function (oEvent) {
+        var oViewModel = this.getView().getModel("listView")
+        var aTokens = oEvent.getParameter("tokens");
+        var sKey = aTokens[0].getKey();
+
+        oViewModel.setProperty("/massDischarge/popUpData/partner", sKey);
+        // this._oMultiInput.setTokens(aTokens);
+
+        if (sKey) {
+          new GetBalance(
+            "Parceiro",
+            sKey,
+            this.byId('Balance'),
+            this.getView()
+          );
+        }
+
+
+        this._oVHD.close();
+      },
+
+      _filterTable: function (oFilter) {
+        var oVHD = this._oVHD;
+
+        oVHD.getTableAsync().then(function (oTable) {
+          if (oTable.bindRows) {
+            oTable.getBinding("rows").filter(oFilter);
+          }
+          if (oTable.bindItems) {
+            oTable.getBinding("items").filter(oFilter);
+          }
+
+          // This method must be called after binding update of the table.
+          oVHD.update();
+        });
+      },
+
+
+
+      _addMaskToInput: function (oInput) {
+        var $input = oInput.$().find("input");
+        $input.mask("000.000.000-00", {
+          reverse: true,
+          onKeyPress: function (cpf, event, currentField, options) {
+            var masks = ["000.000.000-000", "00.000.000/0000-00"];
+            var mask = (cpf.length > 14) ? masks[1] : masks[0];
+            $input.mask(mask, options);
+          }
+        });
+      },
+
+
       onContractF4: function (oEvent) {
         let oSelectDialog = ValueHelp.createSearchHelp(
           this.getView(),
@@ -543,6 +785,16 @@ sap.ui.define(
           noDataText: this.getResourceBundle().getText("listListNoDataText"),
           sortBy: "EdcNum",
           groupBy: "None",
+          massDischarge: {
+            buttons: {
+              partner: { visible: true },
+              CPF: { visible: false },
+              CNPJ: { visible: false },
+            },
+            popUpData: {
+              partner: ""
+            }
+          }
         });
       },
 
@@ -595,8 +847,8 @@ sap.ui.define(
        */
       _applyFilterSearch: function () {
         var aFilters = this._oListFilterState.aSearch.concat(
-            this._oListFilterState.aFilter
-          ),
+          this._oListFilterState.aFilter
+        ),
           oViewModel = this.getModel("listView");
         this._oList.getBinding("items").filter(aFilters, "Application");
         // changes the noDataText of the list in case there are no filter results
@@ -608,7 +860,6 @@ sap.ui.define(
             )
           );
         } else if (this._oListFilterState.aSearch.length > 0) {
-          debugger;
           // only reset the no data text to default when no new search was triggered
           oViewModel.setProperty(
             "/noDataText",
