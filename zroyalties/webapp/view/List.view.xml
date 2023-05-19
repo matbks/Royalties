@@ -17,6 +17,7 @@
 				id="sfb_monitor"
 				entitySet="ZADOC_ROYALTIES_MONITOR"
 				persistencyKey="SmartFilter_Explored"
+				liveMode="true"  
 			>
 				<smartFilterBar:controlConfiguration>
 					<smartFilterBar:ControlConfiguration
@@ -90,7 +91,7 @@
 				showFullScreenButton="true"
 				busyIndicatorDelay="{listView>/delay}"
 				smartFilterId="sfb_monitor"
-				enableAutoBinding="true"
+				enableAutoBinding="false"
 			>
 				<Table
 					id="list"
