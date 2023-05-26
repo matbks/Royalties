@@ -488,6 +488,13 @@ sap.ui.define(
             oModel.create("/DischargeQtySet", payload, {
               success: function (oData, oResponse) {
                 if (oResponse.statusCode == "201") {
+                  if (oData.Protocol === "no auth user") {
+                    var errorMsg = this.getOwnerComponent()
+                    .getModel("i18n")
+                    .getResourceBundle()
+                    .getText("noAuthUser");
+                    MessageToast.show(errorMsg);
+                  } else {
                   var msg = this.getOwnerComponent()
                     .getModel("i18n")
                     .getResourceBundle()
@@ -498,6 +505,7 @@ sap.ui.define(
                   oSmartTableLog.rebindTable();
                   oModelMonitor.refresh(true);
                 }
+              }
               }.bind(this),
 
               error: function (oError) {
