@@ -124,8 +124,8 @@
 						<OverflowToolbarButton
 							id="dischargeIcon"
 							icon="sap-icon://drill-down"
-							text="{i18n>discharge}"
-							tooltip="{i18n>discharge}"
+							text="{i18n>dischargeGroup}"
+							tooltip="{i18n>dischargeGroup}"
 							press="onMassDischarge"
 						/>
 					</OverflowToolbar>

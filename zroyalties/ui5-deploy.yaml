@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
 
-specVersion: "2.5"
+specVersion: "2.6"
 metadata:
   name: royalties.zroyalties
 type: application
@@ -14,13 +14,10 @@ builder:
       afterTask: generateCachebusterInfo
       configuration:
         target:
-          url: https://vhagyds4ci.sap.agrogalaxy.com.br:44300
+          url: https://vhsazqs4ci.sap.safras.net:44300/
           client: "100"
-        credentials:
-          username: env:XYZ_USER
-          password: env:XYZ_PASSWORD
         app:
           name: Z_ADO_ROYALTIES
           description: Monitor de Royalties
           package: Z_ADO_ROYALTIES
-          transport: DS4K972665
+          transport: DS4K9A02MM

@@ -292,6 +292,10 @@ sap.ui.define(
       },
 
       onMassDischarge: function (oEvent) {
+
+        var oViewModel = this.getView().getModel("listView");
+        oViewModel.setProperty("/massDischarge/popUpData/partner", "");
+
         var oView = this.getView();
 
         if (!this.byId("openDialog")) {
@@ -543,6 +547,7 @@ sap.ui.define(
       },
 
       onPartnerF4: function (oEvent) {
+
         let oSelectDialog = ValueHelp.createSearchHelp(
           this.getView(),
           "Parceiro",
@@ -552,85 +557,6 @@ sap.ui.define(
           oEvent.getSource()
         );
         oSelectDialog.open();
-      },
-
-
-
-
-      onValueHelpPartnerRequested: function () {
-        this._oBasicSearchField = new SearchField({ liveChange: this.onFilterBarSearch.bind(this) });
-
-        if (!this.pDialog) {
-          this.pDialog = this.loadFragment("ValueHelpPartner", this.getView());
-        }
-        this.pDialog.then(function (oDialog) {
-          var oFilterBar = oDialog.getFilterBar();
-          this._oVHD = oDialog;
-          if (this._bDialogInitialized) {
-            oDialog.update();
-            oDialog.open();
-            return;
-          }
-          this.getView().addDependent(oDialog);
-
-          oFilterBar.setFilterBarExpanded(false);
-          oFilterBar.setBasicSearch(this._oBasicSearchField);
-
-          this._oBasicSearchField.attachSearch(function () {
-            oFilterBar.search();
-          });
-
-          oDialog.getTableAsync().then(function (oTable) {
-
-            oTable.setModel(this.getView().getModel());
-
-            // For Desktop and tabled the default table is sap.ui.table.Table
-            if (oTable.bindRows) {
-              oTable.bindAggregation("rows", {
-                path: "/ZADOC_ROYALTIES_PARTNERS",
-                events: {
-                  dataReceived: function () {
-                    oDialog.update();
-                  }
-                }
-              });
-              oTable.addColumn(new sap.ui.table.Column({ label: "Parceiro", template: "Partner", width: "100px" }));
-              oTable.addColumn(new sap.ui.table.Column({ label: "Nome do Parceiro", template: "PartnerDescription" }));
-              oTable.addColumn(new sap.ui.table.Column({
-                label: "CNPJ/CPF",
-                template: new sap.m.Text({
-                  text: {
-                    parts: ["CnpjOrCpf"],
-                    formatter: this.formatCnpjCpf
-                  }
-                })
-              }));
-
-            }
-
-            // For Mobile the default table is sap.m.Table
-            if (oTable.bindItems) {
-              oTable.bindAggregation("items", {
-                path: "/ZADOC_ROYALTIES_PARTNERS",
-                template: new ColumnListItem({
-                  cells: [new Label({ text: "{Partner}" }), new sap.m.Label({ text: "{PartnerDescription}" })]
-                }),
-                events: {
-                  dataReceived: function () {
-                    oDialog.update();
-                  }
-                }
-              });
-              oTable.addColumn(new sap.m.Column({ header: new sap.m.Label({ text: "Parceiro" }) }));
-              oTable.addColumn(new sap.m.Column({ header: new sap.m.Label({ text: "Nome do Parceiro" }) }));
-            }
-            oDialog.update();
-          }.bind(this));
-
-          this._bDialogInitialized = true;
-          oDialog.open();
-
-        }.bind(this));
       },
 
 
@@ -647,22 +573,103 @@ sap.ui.define(
 
       },
 
+      onValueHelpPartnerRequested: function () {
+        this._oBasicSearchField = new SearchField({ liveChange: this.onFilterBarSearch.bind(this) });
+
+        if (!this.pDialog) {
+          this.pDialog = this.loadFragment("ValueHelpPartner", this.getView());
+        }
+
+        this.pDialog.then(oDialog => {
+          var oFilterBar = oDialog.getFilterBar();
+          this._oVHD = oDialog;
+
+          if (this._bDialogInitialized) {
+            oDialog.update();
+            oDialog.open();
+            return;
+          }
+
+          this.getView().addDependent(oDialog);
+
+          oFilterBar.setFilterBarExpanded(false);
+          oFilterBar.setBasicSearch(this._oBasicSearchField);
+
+          this._oBasicSearchField.attachSearch(() => {
+            oFilterBar.search();
+          });
+
+          oDialog.getTableAsync().then(oTable => {
+            oTable.setModel(this.getView().getModel());
+
+            // For Desktop and tablet, the default table is sap.ui.table.Table
+            if (oTable.bindRows) {
+              oTable.bindAggregation("rows", {
+                path: "/ZADOC_ROYALTIES_PARTNERS",
+                events: {
+                  dataReceived: () => {
+                    oDialog.update();
+                  }
+                }
+              });
+
+              oTable.addColumn(new sap.ui.table.Column({ label: "Parceiro", template: "Partner", width: "100px" }));
+              oTable.addColumn(new sap.ui.table.Column({ label: "Nome do Parceiro", template: "PartnerDescription" }));
+              oTable.addColumn(new sap.ui.table.Column({
+                label: "CNPJ/CPF",
+                template: new sap.m.Text({
+                  text: {
+                    parts: ["CnpjOrCpf"],
+                    formatter: this.formatCnpjCpf.bind(this)
+                  }
+                })
+              }));
+            }
+
+            // For Mobile the default table is sap.m.Table
+            if (oTable.bindItems) {
+              oTable.bindAggregation("items", {
+                path: "/ZADOC_ROYALTIES_PARTNERS",
+                template: new ColumnListItem({
+                  cells: [new Label({ text: "{Partner}" }), new sap.m.Label({ text: "{PartnerDescription}" })]
+                }),
+                events: {
+                  dataReceived: () => {
+                    oDialog.update();
+                  }
+                }
+              });
+              oTable.addColumn(new sap.m.Column({ header: new sap.m.Label({ text: "Parceiro" }) }));
+              oTable.addColumn(new sap.m.Column({ header: new sap.m.Label({ text: "Nome do Parceiro" }) }));
+            }
+
+            oDialog.update();
+          });
+
+          this._bDialogInitialized = true;
+          oDialog.open();
+        });
+      },
+
       onFilterBarSearch: function (oEvent) {
         var aFilters = [];
+        var sSearchQuery;
 
         if (oEvent.sId === "liveChange") {
-          var sSearchQuery = oEvent.getParameter("value");
+          sSearchQuery = oEvent.getParameter("value");
           if (!sSearchQuery) {
-            var sSearchQuery = oEvent.getParameter("newValue");
-          };
+            sSearchQuery = oEvent.getParameter("newValue");
+          }
+        } else if (oEvent.sId === "clear") {
+          sSearchQuery = ""; // Limpa a consulta de pesquisa
         } else {
-          var sSearchQuery = this._oBasicSearchField.getValue();
-        };
+          sSearchQuery = this._oBasicSearchField.getValue();
+        }
 
         var aSelectionSet = oEvent.getParameter("selectionSet");
 
         if (aSelectionSet) {
-          var aFilters = aSelectionSet.reduce(function (aResult, oControl) {
+          aFilters = aSelectionSet.reduce(function (aResult, oControl) {
             if (oControl.getValue()) {
               aResult.push(new Filter({
                 path: oControl.getName(),
@@ -684,18 +691,20 @@ sap.ui.define(
           return sSearchQuery.replace(regex, '');
         }
 
-        if (isSearchQueryValid(sSearchQuery)) {
+        if (sSearchQuery && isSearchQueryValid(sSearchQuery)) {
           sSearchQuery = removeSpecialChars(sSearchQuery);
         }
 
-        aFilters.push(new Filter({
-          filters: [
-            new Filter({ path: "Partner", operator: FilterOperator.Contains, value1: sSearchQuery }),
-            new Filter({ path: "PartnerDescription", operator: FilterOperator.Contains, value1: sSearchQuery }),
-            new Filter({ path: "CnpjOrCpf", operator: FilterOperator.Contains, value1: sSearchQuery })
-          ],
-          and: false
-        }));
+        if (sSearchQuery) {
+          aFilters.push(new Filter({
+            filters: [
+              new Filter({ path: "Partner", operator: FilterOperator.Contains, value1: sSearchQuery }),
+              new Filter({ path: "PartnerDescription", operator: FilterOperator.Contains, value1: sSearchQuery }),
+              new Filter({ path: "CnpjOrCpf", operator: FilterOperator.Contains, value1: sSearchQuery })
+            ],
+            and: false
+          }));
+        }
 
         this._filterTable(new Filter({
           filters: aFilters,
@@ -708,6 +717,7 @@ sap.ui.define(
       },
 
       onValueHelpOkPress: function (oEvent) {
+
         var oViewModel = this.getView().getModel("listView")
         var aTokens = oEvent.getParameter("tokens");
         var sKey = aTokens[0].getKey();
@@ -760,6 +770,8 @@ sap.ui.define(
 
 
       onContractF4: function (oEvent) {
+
+        debugger;
         let oSelectDialog = ValueHelp.createSearchHelp(
           this.getView(),
           "Contrato",

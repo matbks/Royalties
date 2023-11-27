@@ -7,7 +7,7 @@
 |**Generation Platform**<br>Visual Studio Code|
 |**Floorplan Used**<br>2listdetail|
 |**Service Type**<br>SAP System (ABAP On Premise)|
-|**Service URL**<br>https://vhagyds4ci.sap.agrogalaxy.com.br:44300/sap/opu/odata/sap/ZADOP_ROYALTIES_SRV
+|**Service URL**<br>https://vhsazqs4ci.sap.safras.net:44300//sap/opu/odata/sap/ZADOP_ROYALTIES_SRV
 |**Module Name**<br>zroyalties|
 |**Application Title**<br>Monitor de Royalties|
 |**Namespace**<br>royalties|
